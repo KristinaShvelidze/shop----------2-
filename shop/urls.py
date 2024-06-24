@@ -5,6 +5,7 @@ from authorization_page import login, show_login
 from shop_page import shop_page, shop_render
 from cart import cart, cart_render
 from admin_page import admin, admin_render
+from contacts_page import contacts, contacts_render
 
 
 home.add_url_rule(rule= "/", view_func= home_render, methods = ['GET', 'POST'])
@@ -13,6 +14,8 @@ login.add_url_rule(rule= '/authorization_page/', view_func= show_login, methods 
 shop_page.add_url_rule(rule='/shop_page/', view_func= shop_render, methods = ['GET', 'POST'])
 cart.add_url_rule(rule= '/cart/', view_func= cart_render, methods = ['GET', 'POST'])
 admin.add_url_rule(rule= '/admin/', view_func= admin_render, methods = ['GET', 'POST'])
+contacts.add_url_rule(rule= '/contacts/', view_func= contacts_render, methods = ['GET', 'POST'])
+
 
 
 shop.register_blueprint(blueprint= home)
@@ -21,3 +24,4 @@ shop.register_blueprint(blueprint= login)
 shop.register_blueprint(blueprint= shop_page)
 shop.register_blueprint(blueprint= cart)
 shop.register_blueprint(blueprint= admin)
+shop.register_blueprint(blueprint= contacts)

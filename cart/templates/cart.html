@@ -28,8 +28,7 @@
         
     {% if products %}
         {% for product in products %}
-            <!-- <br><img src="{{ url_for('shop_page.static', filename = 'img/' + product.name + '.png') }}" alt="{{ product.name }}" class="product-img"><br> -->
-
+        
             <div id = 'product-{{ product.id }}'>
                 <br><img src= "{{ url_for('shop_page.static', filename= 'img/' + product.name + '.png') }}" alt="{{ product.id }}" class="product-img" ><br>                 
                 <div class="text-conteiner">
@@ -47,47 +46,15 @@
                     </div>
                 </div>
 
-                <!-- <div class="processing-conteiner">
-                    <br><button class="processing">ПЕРЕЙТИ ДО ОФОРМЛЕННЯ</button>
-                    <br><p class="total-count">{{product.count}}-товари на суму</p>
-                    <br><p class="total-discount">Знижка</p>
-                    <br><p class="total-price">Загальна сума</p>
-                </div> -->
-
             </div>
 
-            <!-- <div id = 'product-{{ product.id }}'>
-
-                {% if product.name == "IPHONE 14 PLUS PURPLE" %}
-                    <br><img src="{{ url_for('shop_page.static', filename= 'img/2.png') }}" alt="2" class="product-img" ><br>
-        
-                {% elif product.name == "IPHONE 15 PINK" %}
-                    <br><img src="{{ url_for('shop_page.static', filename= 'img/3.png') }}" alt="3" class="product-img"><br>
-
-                {% else  %}
-                    <br><img src="{{ url_for('shop_page.static', filename= 'img/1.png') }}" alt="1" class="product-img" ><br>
-                {% endif %}
-                <div class="text-conteiner"></div>
-                    <div class="text-content">
-                        <div class="button-count">
-                            <p class="name" >{{ product.name }}</p>
-                            <button class= "minus" id = "{{ product.id }}">-</button>
-                            <p class="count">{{ product.count }}</p>
-                            <button class= "plus" id = "{{ product.id }}">+</button>
-                            
-                            <p class="price">{{ product.price }}</p>
-                        </div>
-                        
-                    </div>
-                    
-                </div>
-            </div> -->
         {% endfor %}
 
         <div class="processing-conteiner">
             <br><button class="processing">ПЕРЕЙТИ ДО ОФОРМЛЕННЯ</button>
 
-            <br><p class="total-count">0-товари на суму</p>
+            <br><p class="final-count-num"></p>
+            <p class="total-count">-товарів на суму</p>
             <p class="final-count"></p>
 
             <br><p class="total-discount">Знижка</p>
@@ -98,11 +65,42 @@
             
         </div>
 
+        <div class="popup-processing" style= "display: none;">
+            <form method="post" class="processing-form">
+                <p>ОФОРМЛЕННЯ ЗАМОВЛЕННЯ</p>
+
+                <label for="name">ІМ'Я:</label>
+                <input type="text" name="name">
+
+                <label for="name">ПРІЗВИЩЕ:</label>
+                <input type="text" name="last-name">
+                
+                <label for="name">ТЕЛЕФОН ЗАМОВНИКА:</label>
+                <input type="tel" name="phone">
+                
+                <label for="name">EMAIL ЗАМОВНИКА:</label>
+                <input type="email" name="email">
+                
+                <label for="name">МІСТО ОТРИМУВАЧА:</label>
+                <input type="text" name="city">
+                
+                <label for="name">ВІДДІЛЕННЯ НОВОЇ ПОШТИ:</label>
+                <input type="text" name="post-office">
+                
+                <label for="name">ДОДАТКОВІ ПОБАЖАННЯ:</label>
+                <textarea name="preferences"></textarea>
+
+                <button type="submit" class="processing-btn" name = 'send-order'>SEND</button>
+            </form>
+            
+        </div>
+
     {% else %}
         <h2>Корзина порожня</h2>
     {% endif %} 
 
     <script src= "{{ url_for('cart.static', filename = 'js/deleteCookies.js') }}"></script>
     <script src= "{{ url_for('cart.static', filename = 'js/plusCookies.js') }}"></script>
+    <script src= "{{ url_for('cart.static', filename = 'js/processing.js') }}"></script>
 
 {% endblock %}

@@ -8,6 +8,7 @@ let p = document.createElement('p')
 // document.body.appendChild()
 
 for (let count = 0; count < listButtons.length; count++) {
+
     let button = listButtons[count]
     button.addEventListener(
         type = 'click',
@@ -35,10 +36,15 @@ for (let count = 0; count < listButtons.length; count++) {
             }else{
                 product_id = document.cookie.split('=')[1]
                 document.cookie = `products = ${product_id} ${button.id}; path = / `
+                
             }
+            
+            // console.log(button.id.length)
         }
     )
 }
+
+
 
 
 

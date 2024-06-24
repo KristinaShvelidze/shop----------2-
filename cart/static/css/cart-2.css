@@ -1,0 +1,126 @@
+body{
+    padding: 0;
+    margin: 0;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+a{
+    display: inline;
+    font-size: 16px;
+    color: black;
+    margin: 40px;
+    margin-left: 20px;
+    padding: 14px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    transform: translateX(-100%);
+
+}
+
+.links{
+    padding-top: 13px;
+}
+
+.links p {
+    margin: 0;
+    margin-right: 40px;
+    float: right;
+    display: inline;
+
+    font-weight: bolder;
+
+}
+
+.product-img{
+    position: absolute;
+    /* left: 30px; */
+    width: 120px;
+    height: 162px;
+
+
+    /* border-top: 2px solid black; */
+    /* width: 1000px; */
+}
+
+.name-space{
+    margin-bottom: 0;
+    font-size: 26.5px;
+    font-weight: 700;
+
+    inline-size: 220px;
+    overflow-wrap: break-word;
+    text-align: center;
+    
+}
+
+.price{
+    font-size: 20px;
+    font-weight: 600;
+    padding-left: 50px;
+}
+
+.text-conteiner {
+    padding: 0px;
+    border-right: 2px solid black; 
+    padding: 15px; 
+    /* padding-bottom: 15px;
+    padding-left: 15px;
+    padding-bottom: 15px; */
+    width: 430px;
+    height: 155px;
+
+    position:relative;
+    left: 125px;
+    bottom: 15px;
+}
+
+.amount{
+    padding-left: 230px;
+    display: block;
+
+    margin-top: -90px;
+}
+.count{
+    font-weight: 700;
+}
+
+h2{
+    text-align: center;
+    padding-top: 50px;
+}
+
+.final-count-num, .total-count{
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+.processing-data, .total-price-order{
+    text-align: center;
+    font-size: 15px;
+    font-weight: 700;
+    margin: 30px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    
+}
+.processing-data-2{
+    text-align: center;
+    margin-top: 0;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    text-transform: uppercase;    
+}
+
+/* .order-data{
+    display: table;
+    margin-right: auto;
+    margin-left: auto;
+
+
+} */
+
+
+
+
+
+

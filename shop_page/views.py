@@ -39,7 +39,8 @@ def shop_render():
             products = Product.query.all(),
             is_auth = current_user.is_authenticated,
             name = current_user.name,
-            is_admin = current_user.is_admin
+            is_admin = current_user.is_admin, 
+            price = Product.final_price
         )
     return flask.render_template(
         template_name_or_list = "shop.html", 

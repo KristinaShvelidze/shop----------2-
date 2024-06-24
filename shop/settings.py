@@ -14,3 +14,5 @@ db = flask_sqlalchemy.SQLAlchemy(app= shop)
 migrate = flask_migrate.Migrate(app= shop, db= db)
 
 
+
+

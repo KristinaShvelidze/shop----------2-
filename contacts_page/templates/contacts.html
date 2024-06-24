@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    ContactsPage
+{% endblock %}
+
+{% block link %}
+    <link rel="stylesheet" href="{{ url_for('contacts.static', filename = 'css/contacts.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="links">
+        <a href="/" style="text-decoration: none">HOME</a>
+        <a href="/shop_page/" style="text-decoration: none">SHOP</a>
+        <a href="/cart/" class="basket-link" style="text-decoration: none">CART</a>
+        <a href="/contacts/" style="font-weight: bolder">CONTACTS</a> 
+
+        <p>{{name}}</p>
+
+        {% if is_admin %}
+            <a href="/admin/" style="text-decoration: none">ADMIN</a>
+        {% else %}
+            <p>You're not admin</p>
+        {% endif %}
+
+    </div>
+
+    <h1>Contacts Page</h1>
+{% endblock %}
