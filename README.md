@@ -65,11 +65,11 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
 > Instructions for running the project locally
 
 + У терміналі папки з файлом setting.py варто прописати такі команди:
-> In the terminal of the folder with the setting.py file, you should write the following commands:
+> <sub>In the terminal of the folder with the setting.py file, you should write the following commands:<sub>
    ```
-       > flask --app settings db init
-       > flask --app settings db migrate
-       > flask --app settings db upgrade
+   > flask --app settings db init
+   > flask --app settings db migrate
+   > flask --app settings db upgrade
    ```
 ### Інструкція по віддаленому запуску проекту
 > Instructions for remote project launch
