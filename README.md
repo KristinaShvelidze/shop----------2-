@@ -5,7 +5,7 @@
 - [Швелідзе Крістіна / Shvelidze Kristina ](https://github.com/KristinaShvelidze)
 - [Сергієнко Валерія / Serhiienko Valeriia](https://github.com/Valeria2009Serhiienko)  
 - [Федорова Христина / Fedorova Kristina](https://github.com/Krissfedor)
-- [Легар Денис] / Legar Denys(https://github.com/denysUwU)
+- [Легар Денис / Legar Denys](https://github.com/denysUwU)
 
 
 ## Опис проекту
@@ -16,7 +16,7 @@
 >Shop website - is a web application that enables users to make online purchases. On the website, you can view products, add them to the cart and order them at the right place. If the user is an administrator, he is given the right to edit the product description, as well as add a new assortment to the page. All actions are tracked by a
 Telegram bot, which can only be accessed by the owner of the web store. The bot will quickly help you find all users and the contents of their carts stored in the database.
 
-## [Демоверсія](https://anastasiiakotcaba.pythonanywhere.com/)/[Demo version](https://anastasiiakotcaba.pythonanywhere.com/)
+## [Демоверсія / Demo version](https://anastasiiakotcaba.pythonanywhere.com/)
 
 ## Корисність проекту 
 > Usefulness
