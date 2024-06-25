@@ -16,6 +16,6 @@
 
 >Shop website - is a web application that enables users to make online purchases. On the website, you can view products, add them to the cart and order them at the right place. If the user is an administrator, he is given the right to edit the product description, as well as add a new assortment to the page.
 
-### [Демоверсія] (https://anastasiiakotcaba.pythonanywhere.com/)
+### [Демоверсія](https://anastasiiakotcaba.pythonanywhere.com/)
 >[Demo version](https://anastasiiakotcaba.pythonanywhere.com/)
 
