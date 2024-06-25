@@ -2,8 +2,8 @@
 
 ## Учасники команди: 
 
-- [Коцаба Анастасія]
-  (https://github.com/AnastasiaKotsaba2010)
+- Коцаба Анастасія
+  https://github.com/AnastasiaKotsaba2010
 - Швелідзе Крістіна
   https://github.com/KristinaShvelidze
 - Сергієнко Валерія
