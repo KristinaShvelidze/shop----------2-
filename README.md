@@ -35,10 +35,10 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
 > Required modules
 
 - `flask`: фреймворк для створення веб-застосунків мовою програмування Python, що використовує шаблонізатор Jinja2. Модуль надає змогу створити 'каркас' веб-сайту з базовими можливостями.
-> - <sub>A framework for creating web applications in the Python programming language that uses the Jinja2 templating tool. The module allows you to create a 'shell' website with basic features.<sub>
+> A framework for creating web applications in the Python programming language that uses the Jinja2 templating tool. The module allows you to create a 'shell' website with basic features.
 
 - `flask_SQLAlchemy, sqlite3`: робота з базою даних. Модулі дозволяють створювати нові бази даних та вносити у них змінити.
-> - <sub>Working with the database. Modules allow you to create new databases and make changes to them.<sub>
+> Working with the database. Modules allow you to create new databases and make changes to them.
 
 - `flask_migrate`: модуль, що дозволяє проводити міграції (забезпечує успішне створення таблиць у базі даних). При записі даних у базу, обов'язково варто проводити міграції.
 - 
