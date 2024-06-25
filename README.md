@@ -31,7 +31,7 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
 ## Як розпочати роботу з веб-магазином
 > How to get started with a web store
 
- ### <sub> Необхідні моулі </sub>
- > <sub>Needed modules<sub>
+ ## <sub> Необхідні моулі </sub>
+ ## > <sub>Needed modules<sub>
 
 + 
