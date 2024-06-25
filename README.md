@@ -61,4 +61,13 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
 - `pyTelegramBotAPI (telebot)`: модуль, що дозволяє створювати телеграм бота за допомогою token-ключа, який генерує телеграм канал BotFather.
     > Allows you to create bot telegrams using a token key that generates telegram channel BotFather.
 
+### Інструкція по локальному запуску проекту
+
+1. У терміналі папки з файлом setting.py варто прописати такі команди:
+   ```
+   > flask --app settings db init
+   > flask --app settings db migrate
+   > flask --app settings db upgrade
+   ```
+
   
