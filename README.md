@@ -1,7 +1,5 @@
 # **<h1 align="center">SHOP WEBSITE</h1>**
-
 ## Учасники команди: 
-
 - Коцаба Анастасія
   https://github.com/AnastasiaKotsaba2010
 - Швелідзе Крістіна
