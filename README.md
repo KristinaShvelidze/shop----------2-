@@ -34,4 +34,11 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
  ### Необхідні моулі
 > Required modules
 
-+ 
+- `flask`:
+- `flask_SQLAlchemy`:
+- `flask_migrate`:
+- `flask_login`:
+- `flask_mail`:
+- `pandas`:
+- `openpyxl`:
+- `os`:
