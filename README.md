@@ -1,4 +1,4 @@
-# **[<h1 align="center">SHOP WEBSITE</h1>] (https://anastasiiakotcaba.pythonanywhere.com/)**
+# [**<h1 align="center">SHOP WEBSITE</h1>**](https://anastasiiakotcaba.pythonanywhere.com/)
 ## Учасники команди: 
 - Коцаба Анастасія
     https://github.com/AnastasiaKotsaba2010
