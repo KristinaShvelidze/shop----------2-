@@ -3,8 +3,8 @@
 > Team members
 - [Коцаба Анастасія / Kotsaba Anastasiia](https://github.com/AnastasiaKotsaba2010) 
 - [Швелідзе Крістіна / Shvelidze Kristina ](https://github.com/KristinaShvelidze)
-- [Сергієнко Валерія / Serhiienko Valeriia](https://github.com/Valeria2009Serhiienko)  
 - [Федорова Христина / Fedorova Kristina](https://github.com/Krissfedor)
+- [Сергієнко Валерія / Serhiienko Valeriia](https://github.com/Valeria2009Serhiienko)  
 - [Легар Денис / Legar Denys](https://github.com/denysUwU)
 
 
