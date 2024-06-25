@@ -41,12 +41,24 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
 > Working with the database. Modules allow you to create new databases and make changes to them.
 
 - `flask_migrate`: модуль, що дозволяє проводити міграції (забезпечує успішне створення таблиць у базі даних). При записі даних у базу, обов'язково варто проводити міграції.
-- 
+> A module that allows you to carry out migrations (ensures the successful creation of tables in the database). When recording data in the database, it is absolutely necessary to carry out migrations.
+
 - `flask_login`: управління сесіями зареєстованого користувача.
+> Management of registered user sessions.
+
 - `flask_mail`: модуль, що надає можливості автоматичної відправки листа до електронної пошти користувача.
+> A module that provides the ability to automatically send a letter to the user's e-mail.
+
 - `pandas`: модуль для читання excel файлу, де зберігаються дані про асортимент продуктів.
+> A module for reading an excel file, which stores data on the range of products.
+
 - `openpyxl`: модуль надає можливість зручно додавати дані в кінець аркуша електронної таблиці.
+> The module provides an opportunity to conveniently add data to the end of a spreadsheet sheet.
+ 
 - `os`: модуль, що швидко знаходить абсолютний шлях до потрібного файлу.
+> A module that quickly finds the absolute path to the desired file.
+
 - `pyTelegramBotAPI (telebot)`: модуль, що дозволяє створювати телеграм бота за допомогою token-ключа, який генерує телеграм канал BotFather.
+> A module that allows you to create bot telegrams using a token key that generates telegram channel BotFather.
 
   
