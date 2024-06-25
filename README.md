@@ -62,12 +62,19 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
     > Allows you to create bot telegrams using a token key that generates telegram channel BotFather.
 
 ### Інструкція по локальному запуску проекту
+> Instructions for running the project locally
 
-1. У терміналі папки з файлом setting.py варто прописати такі команди:
+У терміналі папки з файлом setting.py варто прописати такі команди:
+> In the terminal of the folder with the setting.py file, you should write the following commands:
    ```
    > flask --app settings db init
    > flask --app settings db migrate
    > flask --app settings db upgrade
    ```
+### Інструкція по віддаленому запуску проекту
+> Instructions for remote project launch
+
+
+
 
   
