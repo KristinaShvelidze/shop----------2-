@@ -28,4 +28,10 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
 
 > This project is useful for beginners in web development, as it covers all the main aspects of creating a full-fledged website: from implementing the user interface to working with the database. It can be used as a basis for real projects and orders, and is a great opportunity to practice creating flask projects. With the knowledge gained, you will easily be able to create a full-fledged customised web store.
 
+## Як розпочати роботу з веб-магазином
+> How to get started with a web store
 
+ ### <sub> Необхідні моулі </sub>
+ > <sub>Needed modules<sub>
+
++ 
