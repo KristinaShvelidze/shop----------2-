@@ -1,14 +1,16 @@
 # **<h1 align="center">SHOP WEBSITE</h1>**
 
-### Учасники команди: 
+## Учасники команди: 
 
-```Коцаба Анастасія```
+- Коцаба Анастасія
   > https://github.com/AnastasiaKotsaba2010
-```Швелідзе Крістіна```
+- Швелідзе Крістіна
   >  https://github.com/KristinaShvelidze
-```Сергієнко Валерія```
+- Сергієнко Валерія
   >  https://github.com/Valeria2009Serhiienko
-```Федорова Христина```
+- Федорова Христина
   >  https://github.com/Krissfedor
-```Легар Денис```
+- Легар Денис
   >  https://github.com/denysUwU
+
+
