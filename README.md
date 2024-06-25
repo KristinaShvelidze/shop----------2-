@@ -3,14 +3,16 @@
 ## Учасники команди: 
 
 - Коцаба Анастасія
-  >https://github.com/AnastasiaKotsaba2010
+  https://github.com/AnastasiaKotsaba2010
 - Швелідзе Крістіна
-  >https://github.com/KristinaShvelidze
+  https://github.com/KristinaShvelidze
 - Сергієнко Валерія
-  >https://github.com/Valeria2009Serhiienko
+  https://github.com/Valeria2009Serhiienko
 - Федорова Христина
-  >https://github.com/Krissfedor
+  https://github.com/Krissfedor
 - Легар Денис
-  >https://github.com/denysUwU
+  https://github.com/denysUwU
+
+### Shop website -  це веб-застосунок, що надає змогу користувачам здійснювати онлайн покупки. На сайті можна переглядати товари, додавати у кошик та замовляти їх у потрібне місце. Якщо користувач є адміністратором, йому надається право редагувати опис продукту, а також додавати новий асортимент на сторінку.
 
 
