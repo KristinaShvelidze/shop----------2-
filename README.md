@@ -112,14 +112,20 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
  - cd mysite - go to the mysite folder
  - git clone (link to the git repository)
  - Go to the Web tab, scroll down to the Code section:
->In the **Source code** and **Working directory** sections, at the end of the path add: **/mysite/(project folder name)**.
+> In the **Source code** and **Working directory** sections, at the end of the path add: **/mysite/(project folder name)**.
 > Go to the link in the **WSGI configuration file** link
 > In the 16th line, replace flask_app with the name of the folder with the setting.py file, and replace app with the name of the variable for creating all web applications. Save changes
 > In the Virtualenv section, specify the name of the virtual environment.
 > Refresh the site by clicking the Reload button.
 > Follow the link of the web application.
->In case of errors in launching the web application, go to the Log files section, in the Error log item, click the link; correct the errors, refresh the site.
+> In case of errors in launching the web application, go to the Log files section, in the Error log item, click the link; correct the errors, refresh the site.
 
+### Структура проекту 
+
+- `shop`: **головний додаток**, у якому зберігається база даних з інформацією користувача. У файл urls.py підключають усі частини проекту - Blueprint-и, проводять міграції. У папці templates є головний html-шаблон - base.html
+- `registration_page`: логіка сторінки реєстрації, папка містить модель **User**, що зберагіє дані зареєстрованих користувачів. У папці template є шоблон з формою реєстрації.
+- `authorization_page`: логіка сторінки авторизації, у папці template є шоблон з формою авторизації (логін та пароль). 
+- `shop_page`: сторінка з асортиментом товару, є модель ****
 
 
 
