@@ -77,9 +77,9 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
 5. У модальному вікні, у розділі **Select a Python Web framework** обрати **Flask** та версію Python **3.10**.
 6. Перейти у вкладку **Console** > **Bash**.
 7. Створити віртуальне оточення, прописавши наступну команду у консолі:
-   - ``` mkvirtualenv (назва віртуального оточення) -- python = python 3.10```
+   - ```mkvirtualenv (назва віртуального оточення) -- python = python 3.10```
 8. Встановити усі необхідні модулі, які були використані у проекті:
-   - ``` pip install flask, flask_sqlalchemy, flask_migrate, flask_login, flask_mail, pandas, openpyxl, sqlite3, pyTelegramBotAPI```
+   - ```pip install flask, flask_sqlalchemy, flask_migrate, flask_login, flask_mail, pandas, openpyxl, sqlite3, pyTelegramBotAPI```
 9. Завантажити файли проекту: у bush-консолі прописати команди:
    
     -  ```pwd - дізнатись поточну директорію```
