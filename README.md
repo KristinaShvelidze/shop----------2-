@@ -77,21 +77,21 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
 5. У модальному вікні, у розділі **Select a Python Web framework** обрати **Flask** та версію Python **3.10**.
 6. Перейти у вкладку **Console** > **Bash**.
 7. Створити віртуальне оточення, прописавши наступну команду у консолі:
-   - mkvirtualenv (назва віртуального оточення) -- python = python 3.10
+   - ``` mkvirtualenv (назва віртуального оточення) -- python = python 3.10```
 8. Встановити усі необхідні модулі, які були використані у проекті:
-   - pip install flask, flask_sqlalchemy, flask_migrate, flask_login, flask_mail, pandas, openpyxl, sqlite3, pyTelegramBotAPI
+   - ``` pip install flask, flask_sqlalchemy, flask_migrate, flask_login, flask_mail, pandas, openpyxl, sqlite3, pyTelegramBotAPI```
 9. Завантажити файли проекту: у bush-консолі прописати команди:
-    ```
-    - pwd - дізнатись поточну директорію
-    - cd mysite - перейти у папку mysite
-    - git clone (посилання на git-репозиторій)
-    ```
+   
+    -  ```pwd - дізнатись поточну директорію```
+    - ```cd mysite - перейти у папку mysite```
+    - ```git clone (посилання на git-репозиторій)```
+     
  11. Перейти у вкладку **Web**, прогортати вниз до розділу **Code**:
-     ```
-     - У пунктах **Source code** та **Working directory**, вкінці шляху дописати: **/mysite/(назва папки з проектом)**
-     - Перейти на посилання у панкті **WSGI configuration file**
-     - У 16-ому рядку замінити flask_app на назаву папки з файлом setting.py, app замінити на назву змінної для створення усіх веб-додатків. Зберегти зміни
-     ```
+     
+     - ```У пунктах **Source code** та **Working directory**, вкінці шляху дописати: **/mysite/(назва папки з проектом)**```
+     - ```Перейти на посилання у панкті **WSGI configuration file**```
+     - ```У 16-ому рядку замінити flask_app на назаву папки з файлом setting.py, app замінити на назву змінної для створення усіх веб-додатків. Зберегти зміни```
+     
 13. У розділі **Virtualenv** вказати назву віртуального середовища.
 14. Оновити сайт, натиснувши кнопку **Reload**.
 15. Перейти за посиланням веб-додатку.
