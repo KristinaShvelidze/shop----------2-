@@ -27,7 +27,7 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
 ## Як розпочати роботу з веб-магазином
 > How to get started with a web store
 
- ### Необхідні моулі
+ ### Необхідні модулі
 > Required modules
 
 - `flask`: фреймворк для створення веб-застосунків мовою програмування Python, що використовує шаблонізатор Jinja2. Модуль надає змогу створити 'каркас' веб-сайту з базовими можливостями.
