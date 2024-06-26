@@ -88,8 +88,8 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
      
  11. Перейти у вкладку **Web**, прогортати вниз до розділу **Code**:
      
-     - ```У пунктах **Source code** та **Working directory**, вкінці шляху дописати: **/mysite/(назва папки з проектом)**```
-     - ```Перейти на посилання у панкті **WSGI configuration file**```
+     - ```У пунктах Source code та Working directory, вкінці шляху дописати: /mysite/(назва папки з проектом)```
+     - ```Перейти на посилання у панкті WSGI configuration file```
      - ```У 16-ому рядку замінити flask_app на назаву папки з файлом setting.py, app замінити на назву змінної для створення усіх веб-додатків. Зберегти зміни```
      
 13. У розділі **Virtualenv** вказати назву віртуального середовища.
