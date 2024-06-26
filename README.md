@@ -98,41 +98,28 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
 16. У випадку помилок запуску веб-застосунку, перейти у розділ **Log files**, у пункті **Error log** перейти за посиланням; виправити вказані помилки, оновити сайт.
 
 > Perform a local run.
+> In a browser, open the pythonanywhere website, create a beginner account (register).
+> Verify your email address.
+> Go to the Web tab, create a new web application.
+> In the modal window that opens, in the Select a Python Web framework section, select Flask and Python 3.10.
+> Go to the **Console** > **Bash** tab.
+> Create a virtual environment by issuing the following command in the console:
+ - > mkvirtualenv (name of the virtual environment) -- python = python 3.10
+> Install all the necessary modules used in the project:
+  > pip install flask, flask_sqlalchemy, flask_migrate, flask_login, flask_mail, pandas, openpyxl, sqlite3, pyTelegramBotAPI
+> Download the project files: write commands in the bush console:
+ - > pwd - find out the current directory
+ - > cd mysite - go to the mysite folder
+ - > git clone (link to the git repository)
+ - > Go to the Web tab, scroll down to the Code section:
+>In the **Source code** and **Working directory** sections, at the end of the path add: **/mysite/(project folder name)**.
+> Go to the link in the **WSGI configuration file** link
+> In the 16th line, replace flask_app with the name of the folder with the setting.py file, and replace app with the name of the variable for creating all web applications. Save changes
+> In the Virtualenv section, specify the name of the virtual environment.
+> Refresh the site by clicking the Reload button.
+> Follow the link of the web application.
+>In case of errors in launching the web application, go to the Log files section, in the Error log item, click the link; correct the errors, refresh the site.
 
-In a browser, open the pythonanywhere website, create a beginner account (register).
-
-Verify your email address.
-
-Go to the Web tab, create a new web application.
-
-In the modal window that opens, in the Select a Python Web framework section, select Flask and Python 3.10.
-
-Go to the Console > Bash tab.
-
-Create a virtual environment by issuing the following command in the console:
-
-mkvirtualenv (name of the virtual environment) -- python = python 3.10
-Install all the necessary modules used in the project:
-
-pip install flask, flask_sqlalchemy, flask_migrate, flask_login, flask_mail, pandas, openpyxl, sqlite3, pyTelegramBotAPI
-Download the project files: write commands in the bush console:
-
-pwd - find out the current directory
-cd mysite - go to the mysite folder
-git clone (link to the git repository)
-Go to the Web tab, scroll down to the Code section:
-
-In the **Source code** and **Working directory** sections, at the end of the path add: **/mysite/(project folder name)**.
-Go to the link in the **WSGI configuration file** link
-In the 16th line, replace flask_app with the name of the folder with the setting.py file, and replace app with the name of the variable for creating all web applications. Save changes
-In the Virtualenv section, specify the name of the virtual environment.
-
-Refresh the site by clicking the Reload button.
-
-Follow the link of the web application.
-
-In case of errors in launching the web application, go to the Log files section, in the Error log item, click the link; correct the errors, refresh the site.
-*** Translated with www.DeepL.com/Translator (free version) ***
 
 
 
