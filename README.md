@@ -104,14 +104,14 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
 > In the modal window that opens, in the Select a Python Web framework section, select Flask and Python 3.10.
 > Go to the **Console** > **Bash** tab.
 > Create a virtual environment by issuing the following command in the console:
- - > mkvirtualenv (name of the virtual environment) -- python = python 3.10
+ - mkvirtualenv (name of the virtual environment) -- python = python 3.10
 > Install all the necessary modules used in the project:
-  > pip install flask, flask_sqlalchemy, flask_migrate, flask_login, flask_mail, pandas, openpyxl, sqlite3, pyTelegramBotAPI
+  - pip install flask, flask_sqlalchemy, flask_migrate, flask_login, flask_mail, pandas, openpyxl, sqlite3, pyTelegramBotAPI
 > Download the project files: write commands in the bush console:
- - > pwd - find out the current directory
- - > cd mysite - go to the mysite folder
- - > git clone (link to the git repository)
- - > Go to the Web tab, scroll down to the Code section:
+ - pwd - find out the current directory
+ - cd mysite - go to the mysite folder
+ - git clone (link to the git repository)
+ - Go to the Web tab, scroll down to the Code section:
 >In the **Source code** and **Working directory** sections, at the end of the path add: **/mysite/(project folder name)**.
 > Go to the link in the **WSGI configuration file** link
 > In the 16th line, replace flask_app with the name of the folder with the setting.py file, and replace app with the name of the variable for creating all web applications. Save changes
