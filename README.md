@@ -144,7 +144,8 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
 Приклад:
 
    <img src="readme_img/main_app.png" alt="main_app" width="400"/>
-### Створення додатку сторінки - Blueprint
+ 
+ ### Створення додатку сторінки
 
 1. Імпортувати модуль **flask** для подальшої роботи
 2. Створити змінну з назвою вашої сторінки
