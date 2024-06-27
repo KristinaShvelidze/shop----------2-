@@ -1,7 +1,6 @@
 import flask_login
 from registration_page.models import User
 from .settings import shop
-from authorization_page import show_login
 
 shop.secret_key = 'Задайте секретний ключ'
 login_manager = flask_login.LoginManager(shop)

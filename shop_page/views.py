@@ -2,10 +2,6 @@ import flask, os, pandas
 from shop.settings import db
 from .models import Product
 
-from registration_page.models import User
-
-# from registration_page.views import user
-
 from flask_login import current_user
 
 def shop_render():
@@ -40,7 +36,7 @@ def shop_render():
             is_auth = current_user.is_authenticated,
             name = current_user.name,
             is_admin = current_user.is_admin, 
-            price = Product.final_price
+            prices = Product.final_price
         )
     return flask.render_template(
         template_name_or_list = "shop.html", 

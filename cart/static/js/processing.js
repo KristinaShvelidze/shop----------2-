@@ -3,6 +3,9 @@ console.log(cookies.length)
 
 document.querySelector('.final-count-num').textContent = cookies.length
 
+let count = document.querySelector('.count')
+let price = document.querySelectorAll('.price')
+
 // let num = 10;
 if (cookies.length > 1 && cookies.length < 5) {
     document.querySelector('.total-count').textContent = '-товари на суму'
@@ -14,7 +17,7 @@ if (cookies.length == 1 ) {
 }
 
 let finalCount = document.querySelector(".final-count")
-// finalCount.textContent = 
+finalCount.textContent = cookies.length * Number(price)
 
 document.querySelector('.processing').addEventListener(
     'click', (event) => {

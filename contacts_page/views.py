@@ -1,4 +1,4 @@
-import flask 
+import flask, os
 from flask_login import current_user
 
 def contacts_render():
@@ -10,3 +10,5 @@ def contacts_render():
             is_admin = current_user.is_admin
         )
     return flask.render_template(template_name_or_list ='contacts.html')
+
+print(os.path.abspath(__file__))

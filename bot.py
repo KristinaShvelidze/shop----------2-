@@ -1,5 +1,6 @@
 import telebot, sqlite3, os
 from telebot import types
+from registration_page.models import User
 
 bot = telebot.TeleBot('7188110759:AAG5wYSv_W5MwDKrX5kE2hDrT8NDZWHJdGk')
 
@@ -49,12 +50,14 @@ else:
 def answer(callback):
     
     if callback.data == 'get_users':
-        bot.send_message(
-            callback.message.chat.id, 
-            text= f'Імʼя користувача: {row[1]}\nEmail користувача: {row[2]}\nПароль користувача: {row[3]}\nIs_admin: {row[5]}\n ',
-            message_thread_id= 2,
-            reply_markup= get_user_keyboard
-        )
+        users = User.query.all()
+        for user in users:
+            bot.send_message(
+                callback.message.chat.id,
+                text=f'Імʼя користувача: {user.name}\nEmail користувача: {user.email}\nПароль користувача: {user.password}\nIs_admin: {user.is_admin}\n ',
+                reply_markup=get_user_keyboard
+            )
+
 
     if callback.data == 'get_product':
         bot.send_message(
@@ -66,13 +69,13 @@ def answer(callback):
     if callback.data == 'add_product':
         bot.send_message(callback.message.chat.id, text='ok', message_thread_id= 4)
 
-    if callback.data == 'change_admin':
-        cursor.execute('SELECT is_admin FROM user WHERE is_admin = 0')
-        print(row[5])
+    # if callback.data == 'change_admin':
+    #     cursor.execute('SELECT is_admin FROM user WHERE is_admin = 0')
+    #     print(row[5])
 
-    if callback.data == 'remove_admin':
-        cursor.execute('SELECT is_admin FROM user WHERE is_admin = 1')
-        print(row[5])
+    # if callback.data == 'remove_admin':
+    #     cursor.execute('SELECT is_admin FROM user WHERE is_admin = 1')
+    #     print(row[5])
 
 
  

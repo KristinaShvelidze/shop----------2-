@@ -7,3 +7,5 @@ shop_page = flask.Blueprint(
     static_folder= 'static',
     static_url_path= '/shop_page/'
 )
+
+

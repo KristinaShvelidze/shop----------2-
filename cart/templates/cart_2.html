@@ -30,20 +30,6 @@
     <p class="processing-data-2">консультант зв’яжеться з вами для підтвердження замовлення</p>
     {% if products %}            
         {% for product in products %}
-            <!-- <div id = 'product-{{ product.id }}' class="order-data">
-                <br><img src= "{{ url_for('shop_page.static', filename= 'img/' + product.name + '.png') }}" alt="{{ product.id }}" class="product-img" ><br>                 
-                <div class="text-conteiner">
-                    <div class="name-space">
-                        <p class="name">{{ product.description }} </p>
-                    </div>
-
-                    <div class="amount">
-                        <p class="count">{{ product.count }}</p>
-                        <p class="price">{{ product.final_price }} грн</p>
-                    </div>
-                </div>
-            </div> -->
-
             <br><div id="product-{{ product.id }}" class="text-container">
                 <img src="{{ url_for('shop_page.static', filename= 'img/' + product.name + '.png') }}" alt="{{ product.id }}" class="product-img">
 
@@ -56,7 +42,7 @@
         
         <form method="post">
             <p class="total-price-order">Загальна вартість замовлення:</p>
-            <button type="submit" class="reject-order" value="" name="cancel-order">ВІДМІНИТИ ЗАМОВЛЕННЯ</button>
+            <button type="submit" class="reject-order" value="cancel-order" name="cancel-order">ВІДМІНИТИ ЗАМОВЛЕННЯ</button>
         </form>
             
     {% else %}

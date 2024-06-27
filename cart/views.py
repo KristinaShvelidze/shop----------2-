@@ -27,7 +27,10 @@ def cart_render():
         return flask.render_template('cart.html', name=current_user.name)
 
     if flask.request.method == 'POST':
+        print('POST')
         if flask.request.form.get('send-order'):
+            print('send-order')
+            
             order = Order(
                 name=flask.request.form['name'],
                 last_name=flask.request.form['last-name'],
@@ -70,13 +73,14 @@ def cart_render():
                 is_authenticated=current_user.is_authenticated
             )
 
-        if flask.request.form.get('cancel-order'):
-            cancelled_message_text = f'Order № {order.id} was cancelled'
+        elif flask.request.form.get('cancel-order'):
+
+            cancelled_message_text = f'Order was cancelled'
 
             cancelled_message = flask_mail.Message(
-                subject=f'Order № {order.id}',
+                subject=f'Order',
                 sender='vserhiienko212@gmail.com',
-                recipients=[f'{order.email}'],
+                recipients=[current_user.email],
                 body=cancelled_message_text
             )
             mail.send(cancelled_message)
@@ -90,7 +94,7 @@ def cart_render():
                 is_authenticated=current_user.is_authenticated
             )
 
-    print(234567890)
+    print('no_post')
 
 
     if current_user.is_authenticated:
