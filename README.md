@@ -138,8 +138,11 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
    - `import_name`: вказати назву файлу, у якому створюється головний додаток
    - `template_folder`: вказати шлях до папки templates
    -  `instance_path`: вказати шлях, де буде зберігатись база даних
-   -  `static_url_path`: вказати назву, за якою можна знайти сторінку на веб-сайті 
+   -  `static_url_path`: вказати назву, за якою можна знайти сторінку на веб-сайті
+     
   ![main_app](readme_img/main_app.png) 
+  <img src="readme_img/main_app.png" alt="main_app" width="500"/>
+
 
 
 
