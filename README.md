@@ -141,7 +141,7 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
    -  `static_url_path`: вказати назву, за якою можна знайти сторінку на веб-сайті
      
   ![main_app](readme_img/main_app.png) 
-  <img src="readme_img/main_app.png" alt="main_app" width="500"/>
+  <img src="readme_img/main_app.png" alt="main_app" width="400" style="border-radius: 15px;"/>
 
 
 
