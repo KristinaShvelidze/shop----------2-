@@ -131,7 +131,7 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
 - `admin_page`: сторінка, що доступна лише користувачам, які мають у таблиці User **is_admin = 1**. Файл admin.html містить 4 форми, за допомогою них, на сторінці можна змінювати опис товару (картинку, ціну, ім'я, знижку продукту), додавати новий асортимент товару та видаляти продукт з бази даних.
 - `contacts_page`: сторінка, що відповідає за контакти, де ви можете зв'язатись із розробником сайту.
 
-### Створення головного додатку 
+### Створення головного додатку: Flask
 
 1. Створити змінну з назвою вашого головного додатку, що приймає у собі клас Flask з модуля flask  
 2. Вказати необхідні параметри, такі як:
@@ -142,6 +142,18 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
 3. Імпортувати створенну змінну до файлу __init__.py
    
 Приклад:
+   ```
+   # Імортуємо потрібні модулі для створення бази даних та міграцій, головного додатку
+   import flask, flask_sqlalchemy, flask_migrate, os
+
+    shop = flask.Flask(
+        import_name= "settings", # назва файлу, у якому знаходиться змінна 
+        template_folder= "shop/templates", # шлях до папки templates
+        instance_path= os.path.abspath(__file__ + "/.."), # шлях, де буде зберігатись база даних
+        static_url_path= '/shop/' # назва, за якою можна знайти сторінку на веб-сайті
+    )
+
+   ```
 
    <img src="readme_img/main_app.png" alt="main_app" width="400"/>
  
