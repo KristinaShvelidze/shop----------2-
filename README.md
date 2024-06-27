@@ -142,6 +142,7 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
 3. Імпортувати створенну змінну до файлу __init__.py
    
 Приклад:
+
    <img src="readme_img/main_app.png" alt="main_app" width="400"/>
 ### Створення додатку сторінки (Blueprint)
 
@@ -156,6 +157,7 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
 4. Імпортувати створенну змінну до файлу _ _init_ _.py
      
 Приклад:
+
    <img src="readme_img/blueprint.png" alt="blueprint" width="400"/>
 
 ### Спосіб налаштування Blueprint
@@ -168,6 +170,7 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
 3. Звернутись до змінної головного додатку та зареєструвати blueprint, за допомогою функції **register_blueprint**. У параметрах передати потрібний blueprint-додаток
 
 Приклад:
+
    <img src="readme_img/blueprint_setup.png" alt="blueprint" width="400"/>
 
 
