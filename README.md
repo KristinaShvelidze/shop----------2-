@@ -133,18 +133,18 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
 
 ### Створення головного додатку 
 
-1. Створити змінну з назвою вашого головного додатку, що приймає у собі клас Flask з модуля flask
+1. Створити змінну з назвою вашого головного додатку, що приймає у собі клас Flask з модуля flask  <img src="readme_img/main_app.png" alt="main_app" width="400"/>
 2. Вказати необхідні параметри, такі як:
    - `import_name`: вказати назву файлу, у якому створюється головний додаток
    - `template_folder`: вказати шлях до папки templates
    -  `instance_path`: вказати шлях, де буде зберігатись база даних
    -  `static_url_path`: вказати назву, за якою можна знайти сторінку на веб-сайті
    
-  <img src="readme_img/main_app.png" alt="main_app" width="400"/>
+
 
 ### Створення додатку сторінки (Blueprint)
 
-1. Імпортувати модуль **flask** для подальшої роботи.
+1. Імпортувати модуль **flask** для подальшої роботи. <img src="readme_img/blueprint.png" alt="blueprint" width="400"/>
 2. Створити змінну з назвою вашої сторінки.
 3. У змінну записати класс Blueprint з модулю flask. У классі потрібно задати ряд параметрів, таких як:
    - `name`: назва додатку сторінки 
@@ -153,18 +153,18 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
    - `static_folder`: шлях до папки static
    - `static_url_path`: посилання за яким можна знайти сторінку на веб-сайті
 
-<img src="readme_img/blueprint.png" alt="blueprint" width="400"/>
+
 
 ### Спосіб налаштування Blueprint
 
-1. До файлу urls.py імпортувати змінну з Blueprint-додатком та функцію відображення сторінки 
+1. До файлу urls.py імпортувати змінну з Blueprint-додатком та функцію відображення сторінки <img src="readme_img/blueprint_setup.png" alt="blueprint" width="400"/>
 2. До імпортованої змінної додаємо функцію **add_url_rule**, що відповідає за маршрут до сторінки, з такими параметрами, як:
    - `rule`: шаблон URL, який буде оброблятися
    - `view_func`: функція обробки, яка буде викликана, коли запит буде надіслано за вказаним URL
    - `methods`: функція, що була записана у параметр **view_func**, буде викликана для методів, що вказані у цьому параметрі
 3. Звернутись до змінної головного додатку та зареєструвати blueprint, за допомогою функції **register_blueprint**. У параметрах передати потрібний blueprint-додаток
 
-<img src="readme_img/blueprint_setup.png" alt="blueprint" width="400"/>
+
 
 
 
