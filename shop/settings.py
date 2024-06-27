@@ -1,6 +1,5 @@
 import flask, flask_sqlalchemy, flask_migrate, os
 
-
 shop = flask.Flask(
     import_name= "settings", 
     template_folder= "shop/templates",
