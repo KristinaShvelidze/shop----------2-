@@ -891,3 +891,46 @@ def load_user(id): # створюємо функцію, яка приймає п
     <h1>Contacts Page</h1>
 {% endblock %}
 ```
+
+### Опис кожного файлу views.py у кожному веб-додатку 
+pass
+
+### Як провести міграції у проекті
+pass
+
+### Детальний опис кожного файлу models.py 
+
+#### Models.py сторінки shop_page
+Приклад створення моделі:
+```python
+# Імпортуємо базу даних 
+from shop.settings import db
+# Створюємо клас Product, що наслідує модель бази даних, це вказує на те, що це таблиця, яка буде створена у базі після міграцій
+class Product(db.Model):
+    # Створюємо комірку 'id', з типом даних 'Integer'. Параметр primary_key вказує, що кожен id є унікальним ключем кожного користувача
+    id = db.Column(db.Integer, primary_key = True)
+
+    # Створюємо настпуні комірки: 'name', 'price', 'count', 'discount', 'description' з типом даних 'String' або 'Integer' довжиною до 50 символів, яка не може бути порожньою
+    name = db.Column(db.String(50), nullable = False)
+    price = db.Column(db.Integer, nullable = False)
+    count = db.Column(db.Integer, nullable = False)
+    discount = db.Column(db.Integer, nullable = False)
+    description = db.Column(db.Integer, nullable = False)
+
+    final_price = db.Column(db.Integer, nullable = False)
+
+    def __repr__(self):
+        return f"id: {self.id}; name: {self.name};"
+```
+
+#### Models.py сторінки registration_page
+Приклад створення моделі:
+```python
+
+```
+
+#### Models.py сторінки cart
+Приклад створення моделі:
+```python
+
+```
