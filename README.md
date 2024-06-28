@@ -257,9 +257,8 @@ migrate = flask_migrate.Migrate(app= shop, db= db)
    - `['MAIL_PASSWORD']`: задаємо гугл пароль додатку.
 4. Надсилаємо автоматичний лист за допомгою класу **Mail**. У параметраї вказуємо назву головного веб-застосунку, аби лист надсилався при запуску цього проекту
 
-> [!IMPORTANT]
-> **SMTP-сервер** використовується для отримання та надсилання листів на вказану адресу одержувача, використовуючи порт 25, 465 aбо 587.
-> **TLS** — це протокол, який забезпечує безпеку зв'язку через комп'ютерну мережу.
+- **SMTP-сервер** використовується для отримання та надсилання листів на вказану адресу одержувача, використовуючи порт 25, 465 aбо 587.
+- **TLS** — це протокол, який забезпечує безпеку зв'язку через комп'ютерну мережу.
 
 Приклад коду:
 ```python
@@ -309,9 +308,586 @@ def load_user(id): # створюємо функцію, яка приймає п
     return User.query.get(id) # виконуємо запит до бази даних для отримання id користувача. Якщо користувач існує, він повертається, інакше повертається None.
 ```
 
+### Опис html-шаблонів та призначення кожної форми
 
+- Кожен **клас** у будь-якого html-тегу створений для його отримання у потрібному **js-файлі**, а також для **стилізації** цього елементу.
+- Функція **url_for()** застосовується для **підключення потрібних js-файлів, або стилів**. **Перший параметр** цього методу це статика додатку **(blueprint)**, тобто варто вказати назву blueprint-змінної, а потім її **статичний файл**. **Другий параметр це шлях**: назва папки, у якій знаходиться потрібний файл та назва самого файлу.
 
+### **Base.html** 
+- Це шаблон базової сторінки для веб-сайту, який використовується як основа для інших HTML-сторінок. Використовуючи шаблони Jinja2, можна визначити загальну структуру HTML-документа і включати специфічний контент для різних сторінок.
 
+Код шаблону:
+```html
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    # Шаблон Jinja, що надає змогу динамічно вказувати назву сторінки у різних HTML-шаблонах
+    <title>{% block title %} {% endblock %}</title> 
 
+    # Блок, що дозволяє дочірнім (іншим) HTML-шаблонам мати власне посилання на css-файл
+    {% block link %} {% endblock %}
+</head>
+    <body>
+        # Блок, що дозволяє дочірнім (іншим) HTML-шаблонам мати свій особистий контент
+        {% block content %}
+        {% endblock %}
+    </body>
+</html>
+```
+### **Reg.html**: 
+- Шаблон сторінки реєстрації
 
-  
+Код шаблону:
+```html
+# Цей шаблон наслідує базовий шаблон base.html, тобто вміст цього шаблону буде вставлений у відповідні блоки файлу base.html.
+{% extends "base.html" %} 
+
+# Встановлюємо заголовок сторінки "RegistrationPage" 
+{% block title %} RegistrationPage {% endblock %}
+
+# Знову через Jinja-блок динамічно підключаємо стилі для цього шаблону, а саме файл reg.css
+{% block link %}
+    # Функція url_for використовується для створення URL до статичного файлу (reg.css).
+    <link rel="stylesheet" href="{{ url_for('registration.static', filename = 'css/reg.css')}}">
+{% endblock %}
+
+# Динамічно задаємо вміст сторінки через Jinja-блок
+{% block content %}
+    # Перевіряємо, чи є користувач зареєстрований через змінну is_registration, що передається до серверу через файл view.py
+    {% if not is_registration %}
+        # Якщо користувач не зареєстрований, то відображається форма, де варто вказати персональні дані
+        <div class="container">
+            # post-метод означає, що дані форми будуть відправлені на сервер для обробки
+            <form method = 'post'>
+
+                # Кожен тег input має своє призначення, на це вказує тег label
+                <br><label for="name">Login</label>
+                # Поле для введення логіна користувача. 
+                # name="name" вказує, що дані з цього поля будуть надіслані на сервер під ключем "name".
+                <br><input type="text" name="name"><br>
+
+                <br><label for="email">Email<label>
+                # Поле для введення електронної пошти
+                <br><input type="text" name="email"><br>
+                    
+                <br><label for="password">Password<label>
+                # Поле для введення пароля
+                <br><input type="text" name="password"><br>
+
+                <br><label for="password_confirmation">Password confirmation<label>
+                # Поле для підтвердження пароля
+                <br><input type="text" name="password_confirmation"><br>
+
+                <div class="button">
+                    # Кнопка відправки форми. Вона має тип submit, що вказує браузеру відправити дані форми на сервер при натисканні
+                    <br><button type="submit" class="send-button">SEND</button>
+                </div>           
+            </form>          
+        </div>
+    {% else %}
+        # В інакшому випадку, буде повідомлятись, що ми вже зареєстровані, а також div з посиланням на сторінку авторизації
+        <h3 class="message">Ви вже зареєстровані</h3>
+        <div style='text-align: center; margin-top: 15px; margin-right: 10px;'>
+            <a href="/authorization_page/" class="reg-a">AUTHORIZATION</a>
+        </div> 
+    {% endif %}
+{% endblock %}
+```
++ Форма була створення для реєстрації користувача. Варто ввести ім'я, ел. пошту та пароль, аби успішно перейти на веб-додаток. Дані з форми обробляються через файл **veiw.py**, та зберігаються у таблицю **User**.
+
+### **Login.html**: 
+- Шаблон сторінки авторизації
+
+Код шаблону:
+```html
+{% extends "base.html" %} # Наслідуємо базовий шаблон base.html
+
+# Динамічно вказуємо назву сторінки - AuthorizationPage
+{% block title %} AuthorizationPage {% endblock %}
+
+# За допомогою Jinja-блоку завантажуємо файл login.css зі стилями сторінки 
+{% block link %}
+    # Функція url_for використовується для створення URL до статичного файлу (login.css).
+    <link rel="stylesheet" href="{{ url_for('login.static', filename = 'css/login.css')}}">
+{% endblock %}
+
+# Задаємо вміст сторінки через Jinja-блок
+{% block content %}
+    # Div створений для посилання, за яким можливо перейти на сторінку авторизації
+    <div style='text-align: right; margin-top: 15px; margin-right: 10px;'>
+        <a href="/authorization_page/">AUTHORIZATION</a>
+    </div> 
+
+    <div class="login-container">
+        # Форма авторизації, post-метод означає, що дані форми будуть відправлені на сервер для обробки за методом post
+        <form method="post">
+            # Поле для введення логіна або email, за якими користувач був зареєстрованим
+            <br><label for="name">Login or email</label>
+            <br><input type="text" name = 'name'><br>
+
+            # Поле для введення паролю, за яким користувач зареєструвався
+            <br><label for="password">Password</label>
+            <br><input type="text" name = 'password'><br>
+
+            <div class="button">
+                 # Кнопка відправки форми. Вона має тип submit, що вказує браузеру відправити дані форми на сервер при натисканні
+                <br><button type= 'submit'>SEND</button><br>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+```
++ Форма авторизації була створена для забезпечення функціоналу авторизації користувачів у веб-додатку. Основна мета цієї форми — дозволити користувачеві ввести свої дані (логін або email та пароль) для отримання доступу до покупок на сайті.
+
+### **Home.html**
+- Шаблон головної сторінки, яка доступна лише авторизованим користувачам. Її ціль - допомгати швидко знаходити потрібний додаток, наприклад сторінка з асортиментом товару
+
+Код шаблону:
+```html
+{%  extends "base.html" %} # Наслідуємо базовий шаблон base.html
+
+# Динамічно вказуємо назву сторінки - HomePage
+{% block title %}
+    HomePage
+{% endblock %}
+
+# За допомогою Jinja-блоку та функції url_for завантажуємо файл home.css зі стилями сторінки 
+{% block link %}
+    <link rel="stylesheet" href="{{ url_for('home.static', filename = 'css/home.css' )}}">
+{% endblock %}
+
+{% block content %}
+    <h1>HOME PAGE</h1>
+
+    # Перевіряємо, чи є користувач адміністратором через змінну is_admin, яка створенна у файлі views.py кожного веб-додатку. Також перевіряємо чи користувач зареєстрований, через змінну    
+    # is_auth, якщо так - є доступ до усіх сторінок, якщо ж ні, то отримуємо посилання на авторизацію чи реєстрацію 
+    {% if is_auth == True %}
+        <div style=' text-align: left; margin-top: 15px; margin-left: 10px;'>
+            <a href="/" style="font-weight: bolder" >HOME</a>
+            <a href="/shop_page/"  style="text-decoration: none">SHOP</a>
+            <a href="/cart/" class="basket-link" style="text-decoration: none">CART</a>
+            <a href="/contacts/" style="text-decoration: none">CONTACTS</a> 
+
+            <p>{{name}}</p>
+
+            {% if is_admin %}
+                # Якщо користувач є адміністратором, то є доступ до усіх сторінок, у тому числі й до сторінки admin. В іншому випадку, замість посилання на сторінку admin, відображається текст                  # You're not admin
+                <a href="/admin/" style="text-decoration: none">ADMIN</a>
+            {% else %}
+                <p>You're not admin</p>
+            {% endif %}
+        </div> 
+
+    {% else %} 
+        <div style=' text-align: right; margin-top: 15px; margin-right: 10px;'>
+            <a href="/registration_page/" style="font-size: 16.5px;">REGISTRATION</a>
+            <a href="/authorization_page/" style="font-size: 16.5px; margin: 25px">AUTHORIZATION</a>
+        </div>
+    {% endif %}
+{% endblock %}
+```
+
+### **Cart.html**
+- Шаблон корзини. Сторінка містить в собі усі додані товари, можна самостійно редагувати к-сть товару: кнопками + та -
+
+Код шаблону:
+```html
+{%  extends "base.html" %}
+{% block title %}
+    CartPage
+{% endblock %}
+{% block link %}
+    <link rel="stylesheet" href="{{ url_for('cart.static', filename = 'css/basket.css' )}}">
+{% endblock %}
+
+{% block content %}
+    <div class="links">
+        <a href="/" style="text-decoration: none">HOME</a>
+        <a href="/shop_page/" style="text-decoration: none">SHOP</a>
+        <a href="/cart/" class="basket-link" style="font-weight: bolder">CART</a>
+        <a href="/contacts/" style="text-decoration: none">CONTACTS</a> 
+
+        <p>{{name}}</p>
+
+        {% if is_admin %}
+            <a href="/admin/" style="text-decoration: none">ADMIN</a>
+        {% else %}
+            <p>You're not admin</p>
+        {% endif %}
+    </div>
+
+    # Перевіряємо, чи існують продукти на сторінці
+    {% if products %}
+        # Якщо на сторінці є товари, то за допомогою циклу for відображаємо картинку, ім'я, ціну та к-сть товару, яку можна змінювати кнопками + та - (логіка кнопок прописана у файлах 
+        # plusCookies.js і deleteCookies.js).
+        {% for product in products %}
+            <div id = 'product-{{ product.id }}'>
+                <br><img src= "{{ url_for('shop_page.static', filename= 'img/' + product.name + '.png') }}" alt="{{ product.id }}" class="product-img" ><br>                 
+                <div class="text-conteiner">
+                    <div class="name-space">
+                        <p class="name">{{ product.description }} </p>
+                    </div>
+                    
+                    <div class="amount">
+                        <button class= "minus" id = "{{ product.id }}">-</button>
+                        <p class="count">{{ product.count }}</p>
+                        <button class= "plus" id = "{{ product.id }}">+</button>
+
+                        <p class="price">{{ product.final_price }} грн</p>
+                    </div>
+                </div>
+
+            </div>
+        {% endfor %}
+
+        # Div, що відповідає за оформленння товару, а також інформацію про загальну суму товару
+        <div class="processing-conteiner">
+            <br><button class="processing">ПЕРЕЙТИ ДО ОФОРМЛЕННЯ</button>
+
+             # Теги на сторінці є порожніми, адже їх текст динамічно додається через файл processing.js
+            <br><p class="final-count-num"></p>
+            <p class="total-count">-товарів на суму</p>
+
+            <p class="final-count"></p>
+
+            <br><p class="total-discount">Знижка</p>
+            <p class="final-discount"></p>
+            
+            <br><p class="total-price">Загальна сума</p>
+            <p class="final-price"></p>
+        </div>
+
+        <div class="popup-processing" style= "display: none;">
+            # Форма для оформлення замовлення, що з'являється лише по натисканню на кнопку 'Оформити замовлення'. Її головне призначення - заповнення даних, аби на ел.пошту користувача прийшов              # лист про нове замовлення товару, method="post" дає зрозуміти, що дані форми будуть відправлені на сервер для обробки за методом post
+            <form method="post" class="processing-form">
+                <p>ОФОРМЛЕННЯ ЗАМОВЛЕННЯ</p>
+
+                <label for="name">ІМ'Я:</label>
+                <input type="text" name="name">
+
+                <label for="name">ПРІЗВИЩЕ:</label>
+                <input type="text" name="last-name">
+                
+                <label for="name">ТЕЛЕФОН ЗАМОВНИКА:</label>
+                <input type="tel" name="phone">
+                
+                <label for="name">EMAIL ЗАМОВНИКА:</label>
+                <input type="email" name="email">
+                
+                <label for="name">МІСТО ОТРИМУВАЧА:</label>
+                <input type="text" name="city">
+                
+                <label for="name">ВІДДІЛЕННЯ НОВОЇ ПОШТИ:</label>
+                <input type="text" name="post-office">
+                
+                <label for="name">ДОДАТКОВІ ПОБАЖАННЯ:</label>
+                <textarea name="preferences"></textarea>
+
+                # Кнопка, яка відправляє форму. Вона має тип submit, що вказує браузеру відправити дані форми на сервер при натисканні
+                <button type="submit" class="processing-btn" name = 'send-order' value="send-order">SEND</button>
+            </form>
+        </div>
+    {% else %}
+        # У випадку, якщо корзини немає, то відображається текст - Корзина порожня
+        <h2>Корзина порожня</h2>
+    {% endif %} 
+
+    # Підключення усіх потрібних js-файлів через функцію url_for
+    <script src= "{{ url_for('cart.static', filename = 'js/deleteCookies.js') }}"></script>
+    <script src= "{{ url_for('cart.static', filename = 'js/plusCookies.js') }}"></script>
+    <script src= "{{ url_for('cart.static', filename = 'js/processing.js') }}"></script>
+{% endblock %}
+```
+- Форма processing-form була створена для оформлення замовлення. Основна мета форми полягає в тому, щоб користувач міг ввести свої особисті дані та деталі замовлення для подальшої обробки. Після натискання кнопки "Send", дані будуть відправлені про замовлення будуть відправленні на ел.пошту користувачу, вказану у полі 'Email замовника'. У листі ви зможете побачити номер замовлення, ваші особисті дані: ім'я, прізвище, номер телефону, відділення нової пошти, місто та ваші додаткові побажання. 
+
+### **Cart_2.html**
+- Інший шаблон корзини, що відображається після заповнення форми замовлення. Сторінка створена для підтверження замовлення, де можна переглянути к-сть замовлених товарів, вартість усього замовлення. Є кнопка 'Відмінити замовлення', що повертає на сторінку cart.html, також на пошту приходить повідомлення про скасоване замовлення.
+
+Код шаблону:
+```html
+{%  extends "base.html" %}
+
+{% block title %}
+    CartPage
+{% endblock %}
+
+{% block link %}
+    <link rel="stylesheet" href="{{ url_for('cart.static', filename = 'css/cart-3.css' )}}">
+{% endblock %}
+
+{% block content %}
+    <div class="links">
+        <a href="/" style="text-decoration: none">HOME</a>
+        <a href="/shop_page/" style="text-decoration: none">SHOP</a>
+        <a href="/cart/" class="basket-link" style="font-weight: bolder">CART</a>
+        <a href="/contacts/" style="text-decoration: none">CONTACTS</a> 
+
+        <p>{{name}}</p>
+
+        {% if is_admin %}
+            <a href="/admin/" style="text-decoration: none">ADMIN</a>
+        {% else %}
+            <p>You're not admin</p>
+        {% endif %}
+    </div>
+    # Додатковий тект, що дає користувачу змогу зрозуміти, що замовлення в процесі оформлення 
+    <p class="processing-data">Ваші дані у обробці </p>
+    <p class="processing-data-2">консультант зв’яжеться з вами для підтвердження замовлення</p>
+    {% if products %}
+        # Якщо продукти існують на сторінці, то за допомогою циклу for про товар буде відображатись така інформація як, картинка, ім'я та ціна товару, к-сть, яку вже не можна буде змінити       
+        {% for product in products %}
+            <br><div id="product-{{ product.id }}" class="text-container">
+                <img src="{{ url_for('shop_page.static', filename= 'img/' + product.name + '.png') }}" alt="{{ product.id }}" class="product-img">
+
+                <p class="name"> {{ product.description }} </p>
+                <p class="count"> {{ product.count }} </p>
+                <p class="price"> {{ product.final_price }} грн </p>
+            </div>
+        {% endfor %}
+
+        # Форма не має великого застосування і створена лише для зручності (для правильного написання коду у views.py), її мета - скасовувати замовлення. 
+        <form method="post">
+            <p class="total-price-order">Загальна вартість замовлення:</p>
+            <button type="submit" class="reject-order" value="cancel-order" name="cancel-order">ВІДМІНИТИ ЗАМОВЛЕННЯ</button>
+        </form>
+    {% else %}
+        <h2>Корзина порожня</h2>
+    {% endif %} 
+{% endblock %}
+```
+- На цій сторінці форма не має широкого призначення. Вона лише допомагає у файлі views.py правильно надсилати лист про скасоване замовлення.
+
+### **Admin.html**
+- Цей шаблон створений для відображення панелі адміністратора, де адміністратор може бачити список продуктів, додавати нові продукти, редагувати існуючі та видаляти продукти. Він також дозволяє адміністратору керувати різними параметрами продуктів
+
+Код шаблону:
+```html
+{% extends "base.html" %}
+
+{% block title %}
+    ShopPage
+{% endblock %}
+
+{% block link %}
+    <link rel="stylesheet" href="{{ url_for('admin.static', filename = 'css/admin.css') }}">
+{% endblock %}
+
+{% block content %}    
+    <div class="links">
+        <a href="/" style="text-decoration: none">HOME</a>
+        <a href="/shop_page/" style="text-decoration: none">SHOP</a>
+        <a href="/cart/" class="basket-link" style="text-decoration: none">CART</a>
+        <a href="/contacts/" style="text-decoration: none">CONTACTS</a> 
+
+        <p>{{name}}</p>
+
+        {% if is_admin %}
+            <a href="/admin/" style="font-weight: bolder">ADMIN</a>
+        {% else %}
+            <p>You're not admin</p>
+        {% endif %}
+    </div>
+
+    # Форма для додавання продукту
+    <form method="post" class="add-form">
+        # Форма містить текст 'Додати продукт', а також кнопку у вигляді плюса. 
+        <p class="add-text">ДОДАТИ ПРОДУКТ</p>
+        <button class="new-product">
+            <img src="{{ url_for('admin.static', filename= 'img/add.png') }}" alt="" class="add-img">
+        </button>
+    </form>
+    # Застосовуємо цикл for для відображення продуктів     
+    {% for product in products %}
+        <br><img src="{{ url_for('shop_page.static', filename = 'img/' + product.name + '.png') }}" alt="{{ product.name }}" class="product-img"><br>
+
+        # Невелика кнопка поруч з картинкою продукту. Кожен параметр товару (ім'я, ціна, к-сть, та ж картинка) мають цю кнопку, що дозволяє змінювати ці параметри за допомогою форм
+        <button id="{{ product.id }}" class="edit-img-btn">
+            <img src="{{ url_for('admin.static', filename= 'img/edit.png') }}" class="edit-img" style="margin-top: 60px;"><br>
+        </button>
+
+        # Відображення вмісту продукту: ціна та кількість. Самі div-теги створені для зручної стилізації         
+        <div class="text-conteiner"> 
+            <div class="text-content">
+                # Ім'я продукту та кнопка змінення цього ім'я
+                <p class="name" >{{ product.name }} 
+                    <button class= "edit-name" id="{{ product.id }}">
+                        <img src="{{ url_for('admin.static', filename= 'img/edit.png') }}" class="edit-name-img">
+                    </button>
+                </p>
+
+                # Ціна продукту та кнопка змінення ціни
+                <p class="price">{{ product.price }} грн 
+                    <button class="edit-price" id="{{ product.id }}">
+                        <img src="{{ url_for('admin.static', filename= 'img/edit.png') }}" class="edit-price-img">
+                    </button>
+                </p>
+
+                # Знижка продукту та кнопка змінення знижки. Змінюючи знижку, відповідно змінюється й фінальна ціна (логіка дій прописана у файлі views.py)
+                <p class="discount">Знижка {{ product.discount }}% 
+                    <button class="edit-discount" id="{{ product.id }}">
+                        <img src="{{ url_for('admin.static', filename= 'img/edit.png') }}" class="edit-discount-img">
+                    </button>
+                </p>
+
+                # Фінальна ціна продукту, яка рахується за ціною товару та знижкою 
+                <p class="price-2">{{ product.final_price }} грн</p>
+                <button type="submit" class="button" id = "{{ product.id }} ">КУПИТИ</button>
+
+                # Ємність, яку також можна змінювати
+                <p class="text-img">ЄМНІСТЬ:</p>
+                <button type= 'submit' class="amount">128GB <img src="{{ url_for('admin.static', filename= 'img/edit.png') }}" class="amount-edit"></button>
+                <button type= 'submit' class="amount">256GB <img src="{{ url_for('admin.static', filename= 'img/edit.png') }}" class="amount-edit"></button>
+                <button type= 'submit' class="amount">512GB <img src="{{ url_for('admin.static', filename= 'img/edit.png') }}" class="amount-edit"></button> 
+            </div>
+
+            # Форма для видалення продукту
+            <form method="post" class="del-product">
+                <button name= 'del' class="stock" value="{{ product.id }}">ВИДАЛИТИ ТОВАР</button>
+                <img src="{{ url_for('admin.static', filename= 'img/bin.png') }}" alt="" class="bin">
+            </form>
+            
+        </div>
+    {% endfor %}
+
+    # Універсальна форма для зміни будь-якого тексту. У edit.js динамічно задається те, що треба змінювати. Вміст label, input та button тегів змінюється залежно від того, що варто змінити.
+    <div class = "modal-window" style= "display: none;">
+        <form class = "modal-form" method="post" enctype= "multipart/form-data">
+            <label for="" class = "modal-label"></label>
+            <input type="" accept="" name="" class="input-data">
+            <button class="change-btn" type="submit" value="" name="set-changes">SEND</button>
+        </form>
+    </div>
+
+    # Форма для створення нового продукту за вказанми даними в полях
+    <div class="new-product-div" style="display: none;">
+        <form method="post" class="new-product-form" enctype= "multipart/form-data">
+            <p>NEW PRODUCT</p>
+
+            <label for="">IMAGE PRODUCT:</label>
+            <input type="file" name="img" accept= "image/*">
+
+            <label for="">NAME PRODUCT:</label>
+            <input type="text" name="name">
+
+            <label for="">DESCRIPTION PRODUCT:</label>
+            <textarea name="description" id=""></textarea>
+
+            <label for="">PRICE PRODUCT:</label>
+            <input type="number" name="price">
+
+            <label for="">DISCOUNT PRODUCT:</label>
+            <input type="number" name="discount">
+
+            <label for="">COUNT PRODUCT:</label>
+            <input type="number" name="count">
+
+            <button type="submit" name="new-product" value="new">SEND</button>
+        </form>
+    </div>
+
+    # Підключення файлу edit.js, для зміни
+    <script src="{{ url_for('admin.static', filename= 'js/edit.js') }}"></script>
+{% endblock %}
+```
+- Форма з класом **add-form** була створена для **додавання нового продукту**. Як тільки буде натиснута кнопка цієї форми, буде з'являтись нова форма з класом new-product-form.
+- Форма для створення нового продкту з класом **new-product-form** надає змогу адміністратору **додати новий продукт та самострійно обрати усі параметри товару**: картинку, ім'я, ціна, знижка, опис та к-сть товару, тобто адміністратор має змогу повністю створювати свій унікальний товар та додавати його на сторінку з іншими товарами. Новий товар зберігається у базі даних.
+- Форма для змінення будь-якого тексту з класом **modal-form** дозволяє адміністратору швидко **редагувати ім'я товару, ціну товару та його знижку**. Фінальна ціна автоматично рахується за рахунок підключеного файлу edit.js. Зміни параметрів товару зберігаються у базі даних. 
+- Остання форма з класом **del-product** відповідно **видаляє потрібний продукт** зі сторінки та бази даних.
+
+### **Shop.html**
+- Цей файл шаблону створений для відображення сторінки магазину, де користувачі можуть переглядати і взаємодіяти з продуктами, що доступні для покупки. Він включає навігаційні посилання, інформацію про кожен продукт (назву, ціну, знижку, остаточну ціну, статус наявності, а також кнопки для купівлі продуктів та вибору ємності).
+
+Код шаблону:
+```html
+{% extends "base.html" %}
+
+{% block title %}
+    ShopPage
+{% endblock %}
+
+{% block link %}
+    <link rel="stylesheet" href="{{ url_for('shop_page.static', filename = 'css/shop.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="links">
+        <a href="/" style="text-decoration: none">HOME</a>
+        <a href="/shop_page/" style="font-weight: bolder">SHOP</a>
+        <a href="/cart/" class="basket-link" style="text-decoration: none">CART</a>
+        <a href="/contacts/" style="text-decoration: none">CONTACTS</a> 
+
+        <p>{{name}}</p>
+
+        {% if is_admin %}
+            <a href="/admin/" style="text-decoration: none">ADMIN</a>
+        {% else %}
+            <p>You're not admin</p>
+        {% endif %}
+
+    </div>
+    # Створюємо продукт через цикл for
+    {% for product in products %}
+            <br><img src="{{ url_for('shop_page.static', filename = 'img/' + product.name + '.png') }}" alt="" class="product-img"><br>
+            # Вміст кожного продукту: ціна, знижка, ім'я та картинка, ємність
+            <div class="text-conteiner">
+                <div class="text-content">
+                    <p class="name" >{{ product.name }}</p>
+                    <p class="price">{{ product.price }} грн</p>
+                    <p class="discount">Знижка {{ product.discount }}%</p>
+                    
+                    <p class="price-2">{{ product.final_price }} грн </p>
+
+                    <button type="submit" class="button" id = "{{ product.id }} " name="{{ product.final_price }}"> КУПИТИ </button>
+                
+                    <p class="text-img">ЄМНІСТЬ: </p>
+                    <button type= 'submit' class="amount">128GB</button>
+                    <button type= 'submit' class="amount">256GB</button>
+                    <button type= 'submit' class="amount">512GB</button>
+                
+                </div>
+                # Інформуємо користувача про наявність товару за допомогою цього div-тегу
+                <p class="stock">ТОВАР В НАЯВНОСТІ</p>
+                <img src="{{ url_for('shop_page.static', filename= 'img/tick.png') }}" alt="" class="tick">
+            </div>
+    {% endfor %}
+     # Підключаємо файл shop.js, який створює позначку з к-стю товарів біля посилання на сторінку cart, а також записує у cookies id кожного продукту, при натисканні на кнопку 'Купити'
+    <script src="{{ url_for('shop_page.static', filename = 'js/shop.js') }}" defer></script> 
+{% endblock %}
+```
+
+### **Contacts.html**
+- Шаблон сторінки контактів. Сторінка порожня і має лише заголовок - 'Contact page'
+
+Код шаблону:
+```html
+{% extends 'base.html' %}
+
+{% block title %}
+    ContactsPage
+{% endblock %}
+
+{% block link %}
+    <link rel="stylesheet" href="{{ url_for('contacts.static', filename = 'css/contacts.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="links">
+        <a href="/" style="text-decoration: none">HOME</a>
+        <a href="/shop_page/" style="text-decoration: none">SHOP</a>
+        <a href="/cart/" class="basket-link" style="text-decoration: none">CART</a>
+        <a href="/contacts/" style="font-weight: bolder">CONTACTS</a> 
+
+        <p>{{name}}</p>
+
+        {% if is_admin %}
+            <a href="/admin/" style="text-decoration: none">ADMIN</a>
+        {% else %}
+            <p>You're not admin</p>
+        {% endif %}
+
+    </div>
+
+    <h1>Contacts Page</h1>
+{% endblock %}
+```
