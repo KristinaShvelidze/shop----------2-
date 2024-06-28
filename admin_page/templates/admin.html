@@ -67,7 +67,7 @@
                 <button type= 'submit' class="amount">512GB <img src="{{ url_for('admin.static', filename= 'img/edit.png') }}" class="amount-edit"></button> 
             </div>
             
-            <form method="post">
+            <form method="post" class="del-product">
                 <button name= 'del' class="stock" value="{{ product.id }}">ВИДАЛИТИ ТОВАР</button>
                 <img src="{{ url_for('admin.static', filename= 'img/bin.png') }}" alt="" class="bin">
             </form>

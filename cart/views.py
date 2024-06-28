@@ -4,6 +4,7 @@ from shop_page.models import Product
 from .models import Order
 from shop.settings import db
 from shop.mail_config import mail
+from shop.bot import telegram_bot
 
 def cart_render():
     is_admin = False
@@ -61,9 +62,19 @@ def cart_render():
                 subject=f'Order № {order.id}',
                 sender='vserhiienko212@gmail.com',
                 recipients=[f'{order.email}'],
-                body=message_text
+                body= message_text
             )
             mail.send(message)
+            
+            @telegram_bot.callback_query_handler(func=lambda callback: True)
+
+            def answer(callback):
+                telegram_bot.send_message(
+                    callback.message.chat.id,
+                    text=f'Було зроблено нове замовлення №{order.id}',
+                    message_thread_id= 2
+                )
+
 
             return flask.render_template(
                 template_name_or_list='cart_2.html',
@@ -72,7 +83,8 @@ def cart_render():
                 products=list_products,
                 is_authenticated=current_user.is_authenticated
             )
-
+        
+            
         elif flask.request.form.get('cancel-order'):
 
             cancelled_message_text = f'Order was cancelled'

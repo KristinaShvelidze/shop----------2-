@@ -5,7 +5,6 @@ let tickCount = 0
 
 let p = document.createElement('p')
 
-// document.body.appendChild()
 
 for (let count = 0; count < listButtons.length; count++) {
 

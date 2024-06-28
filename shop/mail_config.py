@@ -1,13 +1,20 @@
+# Імпортуємо головний додаток 
 from .settings import shop
+
+# Імпортуємо модуль flask_mail для налаштування відправки листа на ел. пошту
 import flask_mail
 
+# У змінну address записуємо ел.пошту людини, від якої будуть надходити листи
 address = 'vserhiienko212@gmail.com'
 
-shop.config['MAIL_SERVER'] = 'smtp.gmail.com'
-shop.config['MAIL_PORT'] = 587
-shop.config['MAIL_USE_TLS'] = True
-shop.config['MAIL_USERNAME'] = address
-shop.config['MAIL_PASSWORD'] = 'wqwf xzgz eqrb ceyt'
+# SMTP-сервер використовується для отримання та надсилання листів на вказану адресу одержувача, використовуючи порт 25, 465 aбо 587.
+shop.config['MAIL_SERVER'] = 'smtp.gmail.com' # сервер, який здійснює надсилання ел. пошти через протокол SMTP
+shop.config['MAIL_PORT'] = 587 # порт для підключення SMTP-серверу. У цьому випадку це 587
 
-mail = flask_mail.Mail(app=shop)
+# TLS — це протокол, який забезпечує безпеку зв'язку через комп'ютерну мережу. 
+shop.config['MAIL_USE_TLS'] = True # сервер ел. пошти буде використовувати TLS для шифрування з'єднань.
+shop.config['MAIL_USERNAME'] = address # вказуємо змінну зі збереженою поштою відправника
+shop.config['MAIL_PASSWORD'] = 'wqwf xzgz eqrb ceyt' # задаємо пароль для облікового запису ел. пошти, який ваш додаток буде використовувати для відправки ел. листів через сервер ел. пошти.
+
+mail = flask_mail.Mail(app=shop) # Надсилаємо автоматичний лист за допомгою класу **Mail**. У параметраї вказуємо назву головного веб-застосунку, аби лист надсилався при запуску цього проекту
 
