@@ -142,20 +142,9 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
 3. Імпортувати створенну змінну до файлу __init__.py
    
 Приклад:
-   ```python
-   # Імортуємо потрібні модулі для створення бази даних та міграцій, головного додатку
-   import flask, flask_sqlalchemy, flask_migrate, os
-
-    shop = flask.Flask(
-        import_name= "settings", # назва файлу, у якому знаходиться змінна 
-        template_folder= "shop/templates", # шлях до папки templates
-        instance_path= os.path.abspath(__file__ + "/.."), # шлях, де буде зберігатись база даних
-        static_url_path= '/shop/' # назва, за якою можна знайти сторінку на веб-сайті
-    )
-   ```
-  # Імортуємо потрібні модулі для створення бази даних та міграцій, головного додатку
+```python
+# Імортуємо потрібні модулі для створення бази даних та міграцій, головного додатку
 import flask, flask_sqlalchemy, flask_migrate, os
-
 
 shop = flask.Flask(
     import_name= "settings", # назва файлу, у якому знаходиться змінна 
@@ -163,6 +152,8 @@ shop = flask.Flask(
     instance_path= os.path.abspath(__file__ + "/.."), # шлях, де буде зберігатись база даних
     static_url_path= '/shop/' # назва, за якою можна знайти сторінку на веб-сайті
 )
+```
+ 
 
    <img src="readme_img/main_app.png" alt="main_app" width="400"/>
  
