@@ -142,7 +142,7 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
 3. Імпортувати створенну змінну до файлу __init__.py
    
 Приклад:
-   ```
+   ```python
    # Імортуємо потрібні модулі для створення бази даних та міграцій, головного додатку
    import flask, flask_sqlalchemy, flask_migrate, os
 
