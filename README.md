@@ -1205,54 +1205,13 @@ class Order(db.Model):
     )
 
 #### Файл PlusCookies(cart)
+
 Отримуємо всі елементи з класом plus (це кнопки додавання товарів) і зберігаємо їх у змінну buttons.
-    const buttons = document.querySelectorAll('.plus')
-Цей цикл перебирає всі кнопки додавання товарів, щоб додати їм обробники подій.
-    for (let i = 0; i < buttons.length; i++){
-        let button = buttons[i]
-Цей рядок додає обробник подій для кожної кнопки. Подія click викликає функцію, яка виконується при натисканні на кнопку.
-        button.addEventListener(
-            type = 'click',
-            listener = function(event){
- Якщо куки порожні, створюється новий запис у куках з назвою products, де значенням є ID кнопки, яка була натиснута. Збільшується лічильник товарів на 1. Якщо куки вже існують, додається новий ID до існуючого списку продуктів у куках. Збільшується лічильник товарів на 1. Лічильник товарів відображається у попередньому елементі, сусідньому з кнопкою (previousElementSibling).
-                if (.cookie == ""){
-                    document.cookie = `products = ${button.id}; path = /`
-                    button.previousElementSibling.textContent = +button.previousElementSibling.textContent + 1
-                }else{
-                    let currentProduct = document.cookie.split('=')[1]
-                    document.cookie = `products = ${currentProduct} ${button.id}; path = /`
-                    button.previousElementSibling.textContent = +button.previousElementSibling.textContent + 1
-                    // console.log(button.id.length)
-                }
-            }
-        )
-    }
-    #Отримуємо всі елементи з класом plus (це кнопки додавання товарів) і зберігаємо їх у змінну buttons.
-    const buttons = document.querySelectorAll('.plus')
-    #Цей цикл перебирає всі кнопки додавання товарів, щоб додати їм обробники подій.
-    for (let i = 0; i < buttons.length; i++){
-        let button = buttons[i]
-        #Цей рядок додає обробник подій для кожної кнопки. Подія click викликає функцію, яка виконується при натисканні на кнопку.
-        button.addEventListener(
-            type = 'click',
-            listener = function(event){
-                #Якщо куки порожні, створюється новий запис у куках з назвою products, де значенням є ID кнопки, яка була натиснута. Збільшується лічильник товарів на 1. Якщо куки вже                  існують, додається новий ID до існуючого списку продуктів у куках. Збільшується лічильник товарів на 1. Лічильник товарів відображається у попередньому елементі,                        сусідньому з кнопкою (previousElementSibling).
-                if (document.cookie == ""){
-                    document.cookie = `products = ${button.id}; path = /`
-                    button.previousElementSibling.textContent = +button.previousElementSibling.textContent + 1
-                }else{
-                    let currentProduct = document.cookie.split('=')[1]
-                    document.cookie = `products = ${currentProduct} ${button.id}; path = /`
-                    button.previousElementSibling.textContent = +button.previousElementSibling.textContent + 1
-                    // console.log(button.id.length)
-                }
-            }
-        )
-    }
-Отримуємо всі елементи з класом plus (це кнопки додавання товарів) і зберігаємо їх у змінну buttons.
+    
     const buttons = document.querySelectorAll('.plus')
 
 Цей цикл перебирає всі кнопки додавання товарів, щоб додати їм обробники подій.
+    
     for (let i = 0; i < buttons.length; i++){
         let button = buttons[i]
     
@@ -1262,6 +1221,7 @@ class Order(db.Model):
             listener = function(event){
             
  Якщо куки порожні, створюється новий запис у куках з назвою products, де значенням є ID кнопки, яка була натиснута. Збільшується лічильник товарів на 1. Якщо куки вже               існують, додається новий ID до існуючого списку продуктів у куках. Збільшується лічильник товарів на 1. Лічильник товарів відображається у попередньому елементі,                        сусідньому з кнопкою (previousElementSibling).
+ 
             if (document.cookie == ""){
                 document.cookie = `products = ${button.id}; path = /`
                 button.previousElementSibling.textContent = +button.previousElementSibling.textContent + 1
