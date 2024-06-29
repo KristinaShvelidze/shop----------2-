@@ -195,7 +195,6 @@ shop = flask.Flask(
 
 
  ### Створення додатку сторінки: Blueprint
-
 1. Імпортувати модуль **flask** для подальшої роботи
 2. Створити змінну з назвою вашої сторінки
 3. У змінну записати класс Blueprint з модулю flask. У классі потрібно задати ряд параметрів, таких як:
@@ -205,7 +204,18 @@ shop = flask.Flask(
    - `static_folder`: шлях до папки static
    - `static_url_path`: посилання за яким можна знайти сторінку на веб-сайті
 4. Імпортувати створенну змінну до файлу _ _init_ _.py
-     
+ >### Creating a page application: Blueprint
+1. Import the **flask** module for further work
+2. Create a variable with the name of your page
+3. Write the Blueprint class from the flask module to the variable. In the class, you need to set a number of parameters, such as:
+   - `name`: the name of the page application 
+   - `import_name`: the name of the package in which the blueprint is created
+   - `template_folder`: path to the templates folder
+   - `static_folder`: path to the static folder
+   - `static_url_path`: link where you can find the page on the website
+4. Import the created variable to the file _ _init_ _.py
+
+
 Приклад коду:
 
 ```python
