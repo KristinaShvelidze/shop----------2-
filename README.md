@@ -1118,7 +1118,7 @@ class Order(db.Model):
 
 
 ### Опис кожного js-файлу у всіх веб-додатках
-#### Сторінка admin
+#### Файл admin
 Редагування зображення: Цей блок коду додає обробник подій до кнопок з класом edit-img-btn. При натисканні на кнопку ми можемо завантажити нову картинку. Поле вводу налаштовується для прийому будь яких файлів зображень.
 
     let listButtonImage = document.querySelectorAll(".edit-img-btn")
@@ -1180,24 +1180,21 @@ class Order(db.Model):
 
 Редагування знижки: Цей блок додає обробник подій до кнопок з класом edit-discount. При натисканні на кнопку відкривається модальне вікно для зміни знижки. Поле вводу налаштовується для введення числових значень.
 
-let listButtonDiscount = document.querySelectorAll(".edit-discount")
-
-for (let count = 0; count < listButtonDiscount.length; count++) {
-    let button = listButtonDiscount[count]
-
-    button.addEventListener(
-        type = "click",
-        listener = (event) => {
-            document.querySelector(".modal-window").style.display = "flex"
-
-            let inputData = document.querySelector(".input-data")
-            inputData.type = "number"
-            inputData.name = "discount"
-            document.querySelector(".modal-label").textContent= "CHANGE DISCOUNT:"
-            document.querySelector('.change-btn').value = `discount-${button.id}`
-        }
-    )
-}
+    let listButtonDiscount = document.querySelectorAll(".edit-discount")
+    for (let count = 0; count < listButtonDiscount.length; count++) {
+        let button = listButtonDiscount[count]
+        button.addEventListener(
+            type = "click",
+            listener = (event) => {
+                document.querySelector(".modal-window").style.display = "flex"
+                let inputData = document.querySelector(".input-data")
+                inputData.type = "number"
+                inputData.name = "discount"
+                document.querySelector(".modal-label").textContent= "CHANGE DISCOUNT:"
+                document.querySelector('.change-btn').value = `discount-${button.id}`
+            }
+        )
+    }
 Додаємо обробник подій на кнопку new-product, подією буде натискання на кнопку. event.preventDefault() Ця функція запобігає дефолтній поведінці кнопки, тобто щоб, дів, який буде з'являтись по натисканню кнопки не зникав через одну секунду.
 
     document.querySelector('.new-product').addEventListener(
@@ -1206,6 +1203,32 @@ for (let count = 0; count < listButtonDiscount.length; count++) {
             document.querySelector('.new-product-div').style.display = 'flex'
         }
     )
+
+#### Файл PlusCookies(cart)
+    #Отримуємо всі елементи з класом plus (це кнопки додавання товарів) і зберігаємо їх у змінну buttons.
+    const buttons = document.querySelectorAll('.plus')
+    #Цей цикл перебирає всі кнопки додавання товарів, щоб додати їм обробники подій.
+    for (let i = 0; i < buttons.length; i++){
+        let button = buttons[i]
+        #Цей рядок додає обробник подій для кожної кнопки. Подія click викликає функцію, яка виконується при натисканні на кнопку.
+        button.addEventListener(
+            type = 'click',
+            listener = function(event){
+                #Якщо куки порожні, створюється новий запис у куках з назвою products, де значенням є ID кнопки, яка була натиснута. Збільшується лічильник товарів на 1.
+Якщо куки вже існують, додається новий ID до існуючого списку продуктів у куках. Збільшується лічильник товарів на 1.
+Лічильник товарів відображається у попередньому елементі, сусідньому з кнопкою (previousElementSibling).
+                if (.cookie == ""){
+                    document.cookie = `products = ${button.id}; path = /`
+                    button.previousElementSibling.textContent = +button.previousElementSibling.textContent + 1
+                }else{
+                    let currentProduct = document.cookie.split('=')[1]
+                    document.cookie = `products = ${currentProduct} ${button.id}; path = /`
+                    button.previousElementSibling.textContent = +button.previousElementSibling.textContent + 1
+                    // console.log(button.id.length)
+                }
+            }
+        )
+    }
 
 # Висновки 
 - За цей час розробки проекту усі учасники команди навчились головному, як створювати повноцінний веб-додаток. Ми дізнались дуже багато чого нового, наприклад як працювати моделями, що таке Jinja-шаблонізатор, як деплоїти проект на pythonanewhere, як працювати з базою даних через модуль flask_sqlalchemy, що таке міграції та навіщо вони. Навчились автоматично надсилати ел. листи на пошту. Поглибили свої знання у вивченні мови програмування JavaScript. Отже, цей проект дав нам величезні знання, також це чудова нагода попрактикуватись у створення веб-додатків. В майбутньому цей веб-додаток точно дасть початок наступним. 
