@@ -1118,6 +1118,26 @@ class Order(db.Model):
 
 
 ### Опис кожного js-файлу у всіх веб-додатках
+#### Сторінка admin
+Редагування зображення: Цей блок коду додає обробник подій до кнопок з класом edit-img-btn. При натисканні на кнопку ми можемо завантажити нову картинку. Поле вводу налаштовується для прийому будь яких файлів зображень.
+
+let listButtonImage = document.querySelectorAll(".edit-img-btn")
+for (let count = 0; count < listButtonImage.length; count++) {
+    let button = listButtonImage[count]
+    button.addEventListener(
+        type = "click",
+        listener = (event) => {
+            document.querySelector(".modal-window").style.display = "flex"
+
+            let inputData = document.querySelector(".input-data")
+            inputData.type = "file" 
+            inputData.accept = "image/*"
+            inputData.name = "image"
+            document.querySelector(".modal-label").textContent = "CHANGE IMAGE:"
+            document.querySelector('.change-btn').value = image-${button.id}
+        }
+    )
+}
 
 
 
