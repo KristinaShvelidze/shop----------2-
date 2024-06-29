@@ -1139,7 +1139,73 @@ class Order(db.Model):
         )
     }
 
+Редагування назви: Цей блок додає обробник подій до кнопок з класом edit-name. При натисканні на кнопку ми можемо редагувати текст. Налаштовано під редагування тексту.
 
+    let listButtonName = document.querySelectorAll(".edit-name")
+    
+    for (let count = 0; count < listButtonName.length; count++) {
+        let button = listButtonName[count]
+        button.addEventListener(
+            type = "click",
+            listener = (event) => {
+                document.querySelector(".modal-window").style.display = "flex"
+                let inputData = document.querySelector(".input-data")
+                inputData.type = "text"
+                inputData.name = "name"
+                document.querySelector(".modal-label").textContent= "CHANGE TEXT:"
+                document.querySelector('.change-btn').value = `name-${button.id}`
+            }
+        )
+    }
+
+Редагування ціни: Цей блок додає обробник подій до кнопок з класом edit-price. При натисканні на кнопку відкривається модальне вікно для зміни ціни. Поле вводу налаштовується для введення числових значень.
+
+    let listButtonPrice = document.querySelectorAll(".edit-price")
+    for (let count = 0; count < listButtonPrice.length; count++) {
+        let button = listButtonPrice[count]
+    
+        button.addEventListener(
+            type = "click",
+            listener = (event) => {
+                document.querySelector(".modal-window").style.display = "flex"
+    
+                let inputData = document.querySelector(".input-data")
+                inputData.type = "number"
+                inputData.name = "price"
+                document.querySelector(".modal-label").textContent= "CHANGE PRICE:"
+                document.querySelector('.change-btn').value = `price-${button.id}`
+            }
+        )
+    }
+
+Редагування знижки: Цей блок додає обробник подій до кнопок з класом edit-discount. При натисканні на кнопку відкривається модальне вікно для зміни знижки. Поле вводу налаштовується для введення числових значень.
+
+let listButtonDiscount = document.querySelectorAll(".edit-discount")
+
+for (let count = 0; count < listButtonDiscount.length; count++) {
+    let button = listButtonDiscount[count]
+
+    button.addEventListener(
+        type = "click",
+        listener = (event) => {
+            document.querySelector(".modal-window").style.display = "flex"
+
+            let inputData = document.querySelector(".input-data")
+            inputData.type = "number"
+            inputData.name = "discount"
+            document.querySelector(".modal-label").textContent= "CHANGE DISCOUNT:"
+            document.querySelector('.change-btn').value = `discount-${button.id}`
+        }
+    )
+}
+Додаємо обробник подій на кнопку new-product, подією буде натискання на кнопку. event.preventDefault() Ця функція запобігає дефолтній поведінці кнопки, тобто щоб, дів, який буде з'являтись по натисканню кнопки не зникав через одну секунду.
+
+    document.querySelector('.new-product').addEventListener(
+        'click', (event) => {
+            event.preventDefault()
+            document.querySelector('.new-product-div').style.display = 'flex'
+        }
+    )
 
 # Висновки 
 - За цей час розробки проекту усі учасники команди навчились головному, як створювати повноцінний веб-додаток. Ми дізнались дуже багато чого нового, наприклад як працювати моделями, що таке Jinja-шаблонізатор, як деплоїти проект на pythonanewhere, як працювати з базою даних через модуль flask_sqlalchemy, що таке міграції та навіщо вони. Навчились автоматично надсилати ел. листи на пошту. Поглибили свої знання у вивченні мови програмування JavaScript. Отже, цей проект дав нам величезні знання, також це чудова нагода попрактикуватись у створення веб-додатків. В майбутньому цей веб-додаток точно дасть початок наступним. 
