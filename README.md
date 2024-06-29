@@ -215,7 +215,6 @@ shop = flask.Flask(
    >- `static_url_path`: link where you can find the page on the website
 >4. Import the created variable to the file _ _init_ _.py
 
-
 Приклад коду:
 
 ```python
@@ -228,6 +227,20 @@ shop_page = flask.Blueprint(
     template_folder= 'templates', # папка з шаблоном сторінки (абсолютний шлях не варто вказувати через назву пакету)
     static_folder= 'static', # папка зі стилями сторінки
     static_url_path= '/shop_page/' # посилання за яким можна знайти сторінку на веб-сайті
+)
+```
+Code example:
+
+```python
+# Import the flask module for further work
+import flask
+
+shop_page = flask.Blueprint(
+    name = 'shop_page', # name of the page application 
+    import_name= 'shop_page', # the name of the package in which the variable is created (to shorten the path in the following parameters)
+    template_folder= 'templates', # folder with the page template (do not specify the absolute path through the package name)
+    static_folder= 'static', # folder with page styles
+    static_url_path= '/shop_page/' # link where you can find the page on the website
 )
 ```
 
