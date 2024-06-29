@@ -135,7 +135,8 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
 
 ### Структура проекту 
 
-- `shop`: **головний додаток**, у якому зберігається база даних з інформацією користувача. У файл urls.py підключають усі частини проекту - Blueprint-и, проводять міграції. У папці templates є головний html-шаблон - base.html 
+- `shop`: **головний додаток**, у якому зберігається база даних з інформацією користувача. У файл urls.py підключають усі частини проекту - Blueprint-и, проводять міграції. У папці templates є головний html-шаблон - base.html
+>  `shop`: **the main application**, which stores the database with user information. All parts of the project - Blueprints - are connected to the urls.py file and migrations are performed. The templates folder contains the main html template - base.html
 - `registration_page`: логіка сторінки реєстрації, папка містить модель **User**, що зберагіє дані зареєстрованих користувачів, взятих з форми реєстрації у папці template.
 - `authorization_page`: логіка сторінки авторизації, у папці template є шоблон з формою авторизації (логін та пароль). 
 - `home_page`:  основна сторінка користувача, яка з'являється після реєстрації, містить посилання на усі інші сторінки веб-сайту.
