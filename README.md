@@ -1726,8 +1726,7 @@ document.querySelector('.processing').addEventListener(
 Додаємо обробник події 'click' на елемент з класом 'processing', який змінює стиль відображення елемента з класом 'popup-processing' на "flex".
 
 ```
-####Файл Edit.js
-
+#### Файл Processing Edit.js
 ```javascript
 // Вибираємо всі елементи з класом 'edit-img-btn' і зберігаємо їх у listButtonImage
 let listButtonImage = document.querySelectorAll(".edit-img-btn");
