@@ -144,13 +144,6 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
 - `admin_page`: сторінка, що доступна лише користувачам, які мають у таблиці User **is_admin = 1**. Файл admin.html містить 4 форми, за допомогою них, на сторінці можна змінювати опис товару (картинку, ціну, ім'я, знижку продукту), додавати новий асортимент товару та видаляти продукт з бази даних.
 - `contacts_page`: сторінка, що відповідає за контакти, де ви можете зв'язатись із розробником сайту.
   
->-`registration_page`: the logic of the registration page, the folder contains the **User** model, which stores the data of registered users taken from the registration form in the template folder.
->-`authorization_page`: logic of the authorization page, in the template folder there is a template with an authorization form (login and password).
->-`home_page`: the main user page that appears after registration and contains links to all other pages of the website.
->-`shop_page`: a page with a product assortment, there is a **Product** model that stores all products on the page. Product information is stored in the **excel file** Product.xlsx.
->-`cart`: the cart page, which stores all the desired products for ordering. The cart.html file contains a form for filling in order information, the data is stored in the **Order** model. The cart_2.html page is displayed only after the order is placed. The views.py file is responsible for sending a letter to the email notifying you of a new order.
->-`admin_page`: a page that is available only to users who have **is_admin = 1** in the User table. The admin.html file contains 4 forms, using them, on the page you can change the product description (picture, price, name, product discount), add a new product range and delete a product from the database.
->-`contacts_page`: the page responsible for contacts, where you can contact the site developer.
 ### Створення головного додатку: Flask
 
 1. Створити змінну з назвою вашого головного додатку, що приймає у собі клас Flask з модуля flask  
@@ -1208,6 +1201,8 @@ def reg_render():
                 is_admin=current_user.is_admin
             )
             # Повернення шаблону admin.html з даними про всі продукти та даними про користувача для відображення на сторінці
+
+
     
 
 ### Детальний опис кожного файлу models.py 
@@ -1432,6 +1427,132 @@ class Order(db.Model):
         }
     )
 }
+#### Файл deleteCookies(cart)
+Отримуємо всі кнопки з класом "minus" і зберігаємо їх у змінній listButtonsMinus
+    let listButtonsMinus = document.querySelectorAll(".minus")
+
+for (let count = 0; count < listButtonsMinus.length; count++ ){
+    let button = listButtonsMinus[count]
+    button.addEventListener(
+      type = "click",
+      listener = (event) =>{
+        let cookiesProducts = document.cookie.split('=')[1] 
+        let listIdProducts = cookiesProducts.split(" ")
+
+        for (let index = 0; index < listIdProducts.length; index++){
+          if (button.id == listIdProducts[index]){
+            listIdProducts.splice(index, 1)
+
+            button.nextElementSibling.textContent = Number(button.nextElementSibling.textContent) - 1
+            break
+          }
+        }
+        
+        if (button.nextElementSibling.textContent == 0){
+            document.querySelector(`#product-${button.id}`).remove() 
+        }
+        document.cookie = `products = ${listIdProducts.join(" ")}; path = /`
+        
+        if (document.cookie.split('=')[1] == ''){
+            let h2 = document.createElement('h2') 
+            h2.textContent = 'Корзина порожня' 
+            document.body.append(h2) 
+            document.querySelector('.processing-conteiner').remove()
+        }
+      }
+    )
+}
+
+#### Файл PlusCookies(cart)
+let listButtonsMinus = document.querySelectorAll(".minus")
+// Отримуємо всі кнопки з класом "minus" і зберігаємо їх у змінній listButtonsMinus
+
+for (let count = 0; count < listButtonsMinus.length; count++ ){
+    let button = listButtonsMinus[count]
+    // Проходимо по кожній кнопці у списку listButtonsMinus
+
+    button.addEventListener(
+      type = "click",
+      listener = (event) =>{
+        // Додаємо обробник подій на клік для кожної кнопки
+
+        let cookiesProducts = document.cookie.split('=')[1] 
+        // Отримуємо значення куків, розділяємо їх і зберігаємо у змінній cookiesProducts
+
+        let listIdProducts = cookiesProducts.split(" ")
+        // Розділяємо значення куків по пробілах, щоб отримати список ID продуктів
+
+        for (let index = 0; index < listIdProducts.length; index++){
+          if (button.id == listIdProducts[index]){
+            listIdProducts.splice(index, 1)
+            // Знаходимо продукт з таким же ID як у кнопки, видаляємо його з списку
+
+            button.nextElementSibling.textContent = Number(button.nextElementSibling.textContent) - 1
+            // Зменшуємо кількість продуктів, відображену поруч з кнопкою
+
+            break
+          }
+        }
+        
+        if (button.nextElementSibling.textContent == 0){
+            document.querySelector(`#product-${button.id}`).remove()
+            // Якщо кількість продуктів стала нульовою, видаляємо продукт з DOM
+
+        }
+        
+        document.cookie = `products = ${listIdProducts.join(" ")}; path = /`
+        // Оновлюємо куки з новим списком продуктів
+
+        if (document.cookie.split('=')[1] == ''){
+            let h2 = document.createElement('h2')
+            h2.textContent = 'Корзина порожня'
+            // Якщо куки порожні, створюємо елемент <h2> з текстом "Корзина порожня"
+
+            document.body.append(h2)
+            // Додаємо новий елемент до тіла документа
+
+            document.querySelector('.processing-conteiner').remove()
+            // Видаляємо контейнер з обробкою замовлення
+        }
+      }
+    )
+}
+
+// Додатковий код для оновлення відображення корзини
+
+let cookies = document.cookie.split(' ')
+// Отримуємо куки і розділяємо їх по пробілах, зберігаємо у змінній cookies
+
+console.log(cookies.length)
+// Виводимо в консоль кількість куків
+
+document.querySelector('.final-count-num').textContent = cookies.length
+// Оновлюємо текстове вміст елемента з класом "final-count-num" до кількості куків
+
+let count = document.querySelector('.count')
+let price = document.querySelectorAll('.price')
+// Отримуємо елементи з класами "count" і "price"
+
+if (cookies.length > 1 && cookies.length < 5) {
+    document.querySelector('.total-count').textContent = '-товари на суму'
+    // Якщо кількість куків більше 1 і менше 5, оновлюємо текстове вміст елемента з класом "total-count"
+}
+
+if (cookies.length == 1 ) {
+    document.querySelector('.total-count').textContent = '-товар на суму'
+    // Якщо кількість куків дорівнює 1, оновлюємо текстове вміст елемента з класом "total-count"
+}
+
+let finalCount = document.querySelector(".final-count")
+finalCount.textContent = cookies.length * Number(price)
+// Оновлюємо текстове вміст елемента з класом "final-count" до загальної кількості куків, помноженої на ціну
+
+document.querySelector('.processing').addEventListener(
+    'click', (event) => {
+        document.querySelector('.popup-processing').style.display = "flex"
+        // Додаємо обробник подій на клік для елемента з класом "processing", який показує спливаюче вікно
+    }
+)
 
 # Висновки 
 - За цей час розробки проекту усі учасники команди навчились головному, як створювати повноцінний веб-додаток. Ми дізнались дуже багато чого нового, наприклад як працювати моделями, що таке Jinja-шаблонізатор, як деплоїти проект на pythonanewhere, як працювати з базою даних через модуль flask_sqlalchemy, що таке міграції та навіщо вони. Навчились автоматично надсилати ел. листи на пошту. Поглибили свої знання у вивченні мови програмування JavaScript. Отже, цей проект дав нам величезні знання, також це чудова нагода попрактикуватись у створення веб-додатків. В майбутньому цей веб-додаток точно дасть початок наступним. 
