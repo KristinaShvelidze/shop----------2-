@@ -162,10 +162,10 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
    -  `instance_path`: вказати шлях, де буде зберігатись база даних
    -  `static_url_path`: вказати назву, за якою можна знайти сторінку на веб-сайті
 >2. Specify the necessary parameters, such as:
-   - `import_name`: specify the name of the file in which the main application is created
-   - `template_folder`: specify the path to the templates folder
-   - `instance_path`: specify the path where the database will be stored
-   - `static_url_path`: specify the name by which the page can be found on the website
+   >- `import_name`: specify the name of the file in which the main application is created
+   >- `template_folder`: specify the path to the templates folder
+   >- `instance_path`: specify the path where the database will be stored
+   >- `static_url_path`: specify the name by which the page can be found on the website
 3. Імпортувати створенну змінну до файлу __init__.py
    
 Приклад коду:
