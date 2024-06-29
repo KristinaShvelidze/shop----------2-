@@ -1213,114 +1213,117 @@ def reg_render():
     - mail для відправки електронної пошти.
     - telegram_bot для відправки повідомлень через Telegram.
 
-2. Визначення функції: cart_render
- is_admin = False - Якщо користувач не адміністратор
+2. Визначення функції:
+def cart_render:
+    is_admin = False - Якщо користувач не адміністратор
     products_cookie = flask.request.cookies.get('products') - Перевірка наявності продуктів у куках:
 
-         if products_cookie:  - Отримує куки products.
-          products = products_cookie.split(' ') - Розділяє куки для отримання окремих ID продуктів.
-             list_products = []- Ініціалізує list_products для зберігання об'єктів продуктів.
-repeate_id = []-  для відстеження оброблених ID продуктів.
+    if products_cookie:  - Отримує куки products
+        products = products_cookie.split(' ') - Розділяє куки для отримання окремих ID продуктів.
+        list_products = []- Ініціалізує list_products для зберігання об'єктів продуктів.
+        repeate_id = []-  для відстеження оброблених ID продуктів.
 
-    for id_product in products: - Підрахунок продуктів:
-     count_products = products.count(id_product) - Перебирає ID продуктів для підрахунку кількості.
-if id_product not in repeate_id:
-product = Product.query.get(id_product)  - Отримує деталі продуктів з бази даних.
-        if product: 
-product.count = count_products 
-list_products.append(product) repeate_id.append(id_product)- Додає об'єкти продуктів з їх кількістю до list_products.
+        for id_product in products: - Підрахунок продуктів:
+            count_products = products.count(id_product) - Перебирає ID продуктів для підрахунку кількості.
+            if id_product not in repeate_id:
+                product = Product.query.get(id_product)  - Отримує деталі продуктів з бази даних.
+                if product: 
+                    product.count = count_products 
+                    list_products.append(product)
+                    repeate_id.append(id_product) - Додає об'єкти продуктів з їх кількістю до list_products.
 
     - Обробка POST запитів:
-        if flask.request.method == 'POST': - Якщо метод запиту є POST.
-         if flask.request.form.get('send-order'):  - Якщо форма містить send-order, створює новий об'єкт Order з даними форми.
+         if flask.request.method == 'POST': - Якщо метод запиту є POST.
+             if flask.request.form.get('send-order'):  - Якщо форма містить send-order, створює новий об'єкт Order з даними форми.
  
-order = Order(
-                name=flask.request.form['name'] - записуємо імʼя з форми яку користувач заповнює на сайті.
-                last_name=flask.request.form['last-name']  - записуємо призвіще з форми яку користувач заповнює на сайті.
-                    phone=flask.request.form['phone']  - записуємо телефон з форми яку користувач заповнює на сайті.
-                email=flask.request.form['email']  - записуємо електронну пошту з форми.
-                city=flask.request.form['city']  - записуємо місто з форми.
-               post_office=flask.request.form['post-office']  - записуємо значення з форми.
-            preferences=flask.request.form['preferences']  - записуємо значення з форми.
-            id_product=str(list_products) - в зміну записуємо всі продукти з списку list_products
-            )
+                 order = Order(
+                     name=flask.request.form['name'] - записуємо імʼя з форми яку користувач заповнює на сайті.
+                     last_name=flask.request.form['last-name']  - записуємо призвіще з форми яку користувач заповнює на сайті.
+                     phone=flask.request.form['phone']  - записуємо телефон з форми яку користувач заповнює на сайті.
+                     email=flask.request.form['email']  - записуємо електронну пошту з форми.
+                     city=flask.request.form['city']  - записуємо місто з форми.
+                     post_office=flask.request.form['post-office']  - записуємо значення з форми.
+                     preferences=flask.request.form['preferences']  - записуємо значення з форми.
+                     id_product=str(list_products) - в зміну записуємо всі продукти з списку list_products
+                 )
 
-            db.session.add(order) - Додає замовлення до бази даних.
-db.session.commit() - Збереження змін у базі даних.     
+                 db.session.add(order) - Додає замовлення до бази даних.
+                 db.session.commit() - Збереження змін у базі даних.     
    
-message_text = f'Order № {order.id}: \n\n'  - в змінну message_text записуємо id ордеру. \n - переходить на наступний рядок.
-message_text += f'First name: {order.name}\n' - += до рядку вище додає нове значення, імʼя, із змінної order  в яку записане значення імʼя яке взяте із форми.
-message_text += f'Last name: {order.last_name}\n' - записуємо прізвище.
-message_text += f'Phone number: {order.phone}\n' - записує номер телефону.
-message_text += f'Email: {order.email}\n' записує електронну адресу.
-message_text += f'City: {order.city}\n' - записуж назву міста.
-message_text += f'Post office: {order.post_office}\n' - записує поштове відділення.
-message_text += f'Preferences: {order.preferences}\n' - записує додаткові побажання.
+                 message_text = f'Order № {order.id}: \n\n'  - в змінну message_text записуємо id ордеру. \n - переходить на наступний рядок.
+                 message_text += f'First name: {order.name}\n' - += до рядку вище додає нове значення, імʼя, із змінної order  в яку записане значення імʼя яке взяте із форми.
+                 message_text += f'Last name: {order.last_name}\n' - записуємо прізвище.
+                 message_text += f'Phone number: {order.phone}\n' - записує номер телефону.
+                 message_text += f'Email: {order.email}\n' записує електронну адресу.
+                 message_text += f'City: {order.city}\n' - записуж назву міста.
+                 message_text += f'Post office: {order.post_office}\n' - записує поштове відділення.
+                 message_text += f'Preferences: {order.preferences}\n' - записує додаткові побажання.
+                 
 
+                 message = flask_mail.Message(
+                 subject=f'Order № {order.id}', 
+                 sender='vserhiienko212@gmail.com', 
+                 recipients=[f'{order.email}'], 
+                 body= message_text ) mail.send(message) - Створює повідомлення з підсумком замовлення.
 
-message = flask_mail.Message(
-subject=f'Order № {order.id}', 
-sender='vserhiienko212@gmail.com', 
-recipients=[f'{order.email}'], 
-body= message_text ) mail.send(message) - Створює повідомлення з підсумком замовлення.
-
-mail.send(message) - Відправляє електронного листа з підтвердженням замовлення користувачу.
+                 mail.send(message) - Відправляє електронного листа з підтвердженням замовлення користувачу.
             
-@telegram_bot.callback_query_handler(func=lambda callback: True) 
-def answer(callback): 
-telegram_bot.send_message( 
-callback.message.chat.id, 
-text=f'Було зроблено нове замовлення №{order.id}', 
-message_thread_id= 2 ) - Відправляє сповіщення у Telegram чат.
+                @telegram_bot.callback_query_handler(func=lambda callback: True) 
+                def answer(callback): 
+                    telegram_bot.send_message( 
+                    callback.message.chat.id, 
+                    text=f'Було зроблено нове замовлення №{order.id}', 
+                    message_thread_id= 2
+                ) - Відправляє сповіщення у Telegram чат.
 
-return flask.render_template( 
-template_name_or_list='cart_2.html', 
-is_admin=current_user.is_admin,
-name=current_user.name, 
-products=list_products,
-is_authenticated=current_user.is_authenticated
-)  - Відображає інший шаблон кошика (`cart_2.html`), що вказує на розміщення замовлення.
-        
-elif flask.request.form.get('cancel-order'):
+                return flask.render_template(  
+                    template_name_or_list='cart_2.html', 
+                    is_admin=current_user.is_admin,
+                    name=current_user.name, 
+                    products=list_products,
+                    is_authenticated=current_user.is_authenticated
+                )  - Відображає інший шаблон кошика (`cart_2.html`), що вказує на розміщення замовлення.
+                        
+         elif flask.request.form.get('cancel-order'):
 
-cancelled_message_text = f'Order was cancelled' 
+         cancelled_message_text = f'Order was cancelled' 
 
-cancelled_message = flask_mail.Message(  -Скасування замовлення:
-subject=f'Order',
-sender='vserhiienko212@gmail.com', 
-recipients=[current_user.email], 
-body=cancelled_message_text
- ) 
+         cancelled_message = flask_mail.Message(  -Скасування замовлення:
+             subject=f'Order',
+             sender='vserhiienko212@gmail.com', 
+             recipients=[current_user.email], 
+             body=cancelled_message_text
+          ) 
 
-mail.send(cancelled_message) 
-print('order was cancelled')  - Якщо форма містить cancel-order, відправляє електронного листа зі скасуванням замовлення користувачу.
+         mail.send(cancelled_message) 
+         print('order was cancelled')  - Якщо форма містить cancel-order, відправляє електронного листа зі скасуванням замовлення користувачу.
 
-return flask.render_template(
-template_name_or_list='cart.html',
- is_admin=current_user.is_admin,
- name=current_user.name,
- products=list_products,
- is_authenticated=current_user.is_authenticated
- ) 
+        return flask.render_template(
+            template_name_or_list='cart.html',
+             is_admin=current_user.is_admin,
+             name=current_user.name,
+             products=list_products,
+             is_authenticated=current_user.is_authenticated
+         ) 
         - Відображає сторінку кошика знову (`cart.html`).
 
- if current_user.is_authenticated:
- return flask.render_template( 
-template_name_or_list = 'cart.html',
-products= list_products,
-is_authenticated = current_user.is_authenticated, 
-name = current_user.name, 
-is_admin = current_user.is_admin
- )
+        if current_user.is_authenticated:
+            return flask.render_template( 
+                 template_name_or_list = 'cart.html',
+                 products= list_products,
+                 is_authenticated = current_user.is_authenticated, 
+                 name = current_user.name, 
+                 is_admin = current_user.is_admin
+        )
         - Якщо користувач аутентифікований, відображає шаблон кошика (`cart.html`) з деталями продуктів і інформацією про користувача.
 
         - Якщо користувач не аутентифікований, відображає шаблон кошика без інформації про користувача.
 
 
-    return flask.render_template( 
-template_name_or_list = 'cart.html', 
-is_admin = current_user.is_admin
- ) - Відображає відповідний шаблон на основі статусу аутентифікації користувача та дій форми.
+         return flask.render_template( 
+             template_name_or_list = 'cart.html', 
+             is_admin = current_user.is_admin
+      ) - Відображає відповідний шаблон на основі статусу аутентифікації користувача та дій форми.
 
 
 ```  
@@ -1726,7 +1729,8 @@ document.querySelector('.processing').addEventListener(
 Додаємо обробник події 'click' на елемент з класом 'processing', який змінює стиль відображення елемента з класом 'popup-processing' на "flex".
 
 ```
-#### Файл Processing Edit.js
+####Файл Edit.js
+
 ```javascript
 // Вибираємо всі елементи з класом 'edit-img-btn' і зберігаємо їх у listButtonImage
 let listButtonImage = document.querySelectorAll(".edit-img-btn");
