@@ -1814,8 +1814,6 @@ let listButtonDiscount = document.querySelectorAll(".edit-discount");
 // Проходимо через кожну кнопку у listButtonDiscount
 for (let count = 0; count < listButtonDiscount.length; count++) {
     let button = listButtonDiscount[count];
-
-Кристина, [2024-06-29 7:25 PM]
 // Додаємо обробник події натискання на поточну кнопку
     button.addEventListener(
         "click", // Вказуємо тип події як 'click'
