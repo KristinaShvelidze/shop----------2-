@@ -1227,6 +1227,29 @@ class Order(db.Model):
             }
         )
     }
+    #Отримуємо всі елементи з класом plus (це кнопки додавання товарів) і зберігаємо їх у змінну buttons.
+    const buttons = document.querySelectorAll('.plus')
+    #Цей цикл перебирає всі кнопки додавання товарів, щоб додати їм обробники подій.
+    for (let i = 0; i < buttons.length; i++){
+        let button = buttons[i]
+        #Цей рядок додає обробник подій для кожної кнопки. Подія click викликає функцію, яка виконується при натисканні на кнопку.
+        button.addEventListener(
+            type = 'click',
+            listener = function(event){
+                #Якщо куки порожні, створюється новий запис у куках з назвою products, де значенням є ID кнопки, яка була натиснута. Збільшується лічильник товарів на 1. Якщо куки вже                  існують, додається новий ID до існуючого списку продуктів у куках. Збільшується лічильник товарів на 1. Лічильник товарів відображається у попередньому елементі,                        сусідньому з кнопкою (previousElementSibling).
+                if (document.cookie == ""){
+                    document.cookie = `products = ${button.id}; path = /`
+                    button.previousElementSibling.textContent = +button.previousElementSibling.textContent + 1
+                }else{
+                    let currentProduct = document.cookie.split('=')[1]
+                    document.cookie = `products = ${currentProduct} ${button.id}; path = /`
+                    button.previousElementSibling.textContent = +button.previousElementSibling.textContent + 1
+                    // console.log(button.id.length)
+                }
+            }
+        )
+    }
+
 
 # Висновки 
 - За цей час розробки проекту усі учасники команди навчились головному, як створювати повноцінний веб-додаток. Ми дізнались дуже багато чого нового, наприклад як працювати моделями, що таке Jinja-шаблонізатор, як деплоїти проект на pythonanewhere, як працювати з базою даних через модуль flask_sqlalchemy, що таке міграції та навіщо вони. Навчились автоматично надсилати ел. листи на пошту. Поглибили свої знання у вивченні мови програмування JavaScript. Отже, цей проект дав нам величезні знання, також це чудова нагода попрактикуватись у створення веб-додатків. В майбутньому цей веб-додаток точно дасть початок наступним. 
