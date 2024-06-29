@@ -1014,152 +1014,151 @@ def reg_render():
 ### **admin_page**
 Код файлу:
 
-import flask, os, pandas
-# Імпортуються необхідні модулі Flask, os та pandas
-from shop.settings import db
-# Імпортується об'єкт бази даних з налаштувань додатку
-
-from shop_page.models import Product
-# Імпортується модель Product з файлу models додатку shop_page
-
-from registration_page.models import User
-# Імпортується модель User з файлу models додатку registration_page
-
-from flask_login import current_user
-# Імпортується об'єкт current_user для роботи з автентифікацією
-
-def admin_render():
-    # Визначається функція admin_render, яка буде обробляти запити до адміністративної частини
-
-    if len(Product.query.all()) == 0:
-        # Перевірка, чи є продукти у базі даних. Якщо немає, виконується завантаження даних з файлу Excel
-
-        path = os.path.abspath(__file__ + '/../Product.xlsx')
-        # Визначення шляху до файлу Excel з продуктами
-
-        read_xl = pandas.read_excel(
-            io=path,
-            header=None,
-            names=['name', 'price', 'count', 'discount', 'description']
-        )
-        # Зчитування файлу Excel за допомогою pandas, задаються назви стовпців для зчитаних даних
-
-        for row in read_xl.iterrows():
-            data_row = row[1]
-            # Перебір кожного рядка з файлу Excel
-
-            product = Product(
-                name=data_row['name'],
-                price=data_row['price'],
-                count=data_row['count'],
-                discount=data_row['discount'],
-                description=data_row['description'],
-                final_price=data_row['final_price']
+    import flask, os, pandas
+    # Імпортуються необхідні модулі Flask, os та pandas
+    
+    from shop.settings import db
+    # Імпортується об'єкт бази даних з налаштувань додатку
+  
+    from shop_page.models import Product
+    # Імпортується модель Product з файлу models додатку shop_page
+    
+    from registration_page.models import User
+    # Імпортується модель User з файлу models додатку registration_page
+    
+    from flask_login import current_user
+    # Імпортується об'єкт current_user для роботи з автентифікацією
+    
+    def admin_render():
+        if len(Product.query.all()) == 0:
+            # Перевірка, чи є продукти у базі даних. Якщо немає, виконується завантаження даних з файлу Excel
+    
+            path = os.path.abspath(__file__ + '/../Product.xlsx')
+            # Визначення абсолютного шляху до файлу Excel з продуктами
+    
+            read_xl = pandas.read_excel(
+                io=path,
+                header=None,
+                names=['name', 'price', 'count', 'discount', 'description']
             )
-            # Створення нового об'єкта Product для кожного рядка
-
-            db.session.add(product)
-            # Додавання продукту до сесії бази даних
-
-        db.session.commit()
-        # Збереження змін у базі даних
-
-    if flask.request.method == 'POST':
-        # Перевірка, чи є запит методом POST. Обробляються різні форми
-
-        if flask.request.form.get('del'):
-            # Обробка форми видалення продукту
-
-            product_id = int(flask.request.form['del'])
-            product_del = Product.query.get(product_id)
-            # Отримання продукту за його ID
-
-            if product_del:
-                db.session.delete(product_del)
-                db.session.commit()
-                # Видалення продукту з бази даних та збереження змін
-
-                os.remove(os.path.abspath(__file__ + f"/../../shop_page/static/img/{product_del.name}.png"))
-                # Видалення зображення продукту з файлової системи
-
-        if flask.request.form.get('new-product'):
-            # Обробка форми додавання нового продукту
-
-            product = Product(
-                name=flask.request.form['name'],
-                price=flask.request.form['price'],
-                count=flask.request.form['count'],
-                discount=flask.request.form['discount'],
-                description=flask.request.form['description'],
-                final_price=round(int(flask.request.form['price']) - (int(flask.request.form['price']) * (int(flask.request.form['discount']) / 100)), 0)
-            )
-            # Створення нового продукту, обчислення кінцевої ціни з урахуванням знижки
-
-            db.session.add(product)
+            # Зчитування файлу Excel за допомогою pandas, задаються назви стовпців для зчитаних даних
+    
+            for row in read_xl.iterrows():
+                data_row = row[1]
+                # Перебір кожного рядка з файлу Excel
+    
+                product = Product(
+                    name=data_row['name'],
+                    price=data_row['price'],
+                    count=data_row['count'],
+                    discount=data_row['discount'],
+                    description=data_row['description'],
+                    final_price=data_row['final_price']
+                )
+                # Створення нового об'єкта Product для кожного рядка
+    
+                db.session.add(product)
+                # Додавання продукту до сесії бази даних
+    
             db.session.commit()
-            # Додавання продукту до бази даних та збереження змін
-
-            img = flask.request.files['img']
-            img.save(os.path.abspath(__file__ + f'/../../shop_page/static/img/{product.name}.png'))
-            # Збереження зображення продукту у файловій системі
-
-        if flask.request.form.get('set-changes'):
-            # Обробка форми зміни даних продукту
-
-            product_data = flask.request.form.get("set-changes").split('-')
-            product_id = int(product_data[-1])
-            get_product = Product.query.get(product_id)
-            # Розбивка даних форми на тип зміни та ID продукту, отримання продукту за ID
-
-            abspath = os.path.abspath(__file__ + "/../../shop_page/static/img")
-
-            if "image" == product_data[0]:
-                # Зміна зображення продукту
-
-                os.remove(abspath + f'/{get_product.name}.png')
-                new_image = flask.request.files['image']
-                new_image.save(abspath + f'/{get_product.name}.png')
-                # Видалення старого зображення та збереження нового
-
-            elif 'name' == product_data[0]:
-                # Зміна назви продукту
-
-                new_product_name = flask.request.form['name']
-                os.rename(src=abspath + f'/{get_product.name}.png', dst=abspath + f'/{new_product_name}.png')
-                get_product.name = new_product_name
+            # Збереження змін у базі даних
+    
+        if flask.request.method == 'POST':
+            # Перевірка, чи є запит методом POST.
+    
+            if flask.request.form.get('del'):
+                # Обробка форми видалення продукту
+    
+                product_id = int(flask.request.form['del'])
+                product_del = Product.query.get(product_id)
+                # Отримання продукту за його ID
+    
+                if product_del:
+                    db.session.delete(product_del)
+                    db.session.commit()
+                    # Видалення продукту з бази даних та збереження змін
+    
+                    os.remove(os.path.abspath(__file__ + f"/../../shop_page/static/img/{product_del.name}.png"))
+                    # Видалення зображення продукту з файлової системи
+    
+            if flask.request.form.get('new-product'):
+                # Обробка форми додавання нового продукту
+    
+                product = Product(
+                    name=flask.request.form['name'],
+                    price=flask.request.form['price'],
+                    count=flask.request.form['count'],
+                    discount=flask.request.form['discount'],
+                    description=flask.request.form['description'],
+                    final_price=round(int(flask.request.form['price']) - (int(flask.request.form['price']) * (int(flask.request.form['discount']) / 100)), 0)
+                )
+                # Створення нового продукту, обчислення кінцевої ціни з урахуванням знижки
+    
+                db.session.add(product)
                 db.session.commit()
-                # Оновлення імені файлу зображення та назви продукту у базі даних
-
-            elif 'price' == product_data[0]:
-                # Зміна ціни продукту
-
-                new_product_price = flask.request.form['price']
-                get_product.price = new_product_price
-                get_product.final_price = round(int(new_product_price) - (int(new_product_price) * (int(get_product.discount) / 100)), 0)
-                db.session.commit()
-                # Оновлення ціни та кінцевої ціни продукту у базі даних
-
-            elif 'discount' == product_data[0]:
-                # Зміна знижки продукту
-
-                new_product_discount = flask.request.form['discount']
-                get_product.discount = new_product_discount
-                get_product.final_price = round(int(get_product.price) - (int(get_product.price) * (int(new_product_discount) / 100)), 0)
-                db.session.commit()
-                # Оновлення знижки та кінцевої ціни продукту у базі даних
-
-    if current_user.is_authenticated:
-        # Перевірка, чи користувач автентифікований
-
-        return flask.render_template(
-            template_name_or_list='admin.html',
-            products=Product.query.all(),
-            is_auth=current_user.is_authenticated,
-            name=current_user.name,
-            is_admin=current_user.is_admin
-        )
-        # Повернення шаблону admin.html з даними про всі продукти та даними про користувача для відображення на сторінці
-
+                # Додавання продукту до бази даних та збереження змін
+    
+                img = flask.request.files['img']
+                img.save(os.path.abspath(__file__ + f'/../../shop_page/static/img/{product.name}.png'))
+                # Збереження зображення продукту у файловій системі
+    
+            if flask.request.form.get('set-changes'):
+                # Обробка форми зміни даних продукту
+    
+                product_data = flask.request.form.get("set-changes").split('-')
+                product_id = int(product_data[-1])
+                get_product = Product.query.get(product_id)
+                # Розбивка даних форми на тип зміни та ID продукту, отримання продукту за ID
+    
+                abspath = os.path.abspath(__file__ + "/../../shop_page/static/img")
+    
+                if "image" == product_data[0]:
+                    # Зміна зображення продукту
+    
+                    os.remove(abspath + f'/{get_product.name}.png')
+                    new_image = flask.request.files['image']
+                    new_image.save(abspath + f'/{get_product.name}.png')
+                    # Видалення старого зображення та збереження нового
+    
+                elif 'name' == product_data[0]:
+                    # Зміна назви продукту
+    
+                    new_product_name = flask.request.form['name']
+                    os.rename(src=abspath + f'/{get_product.name}.png', dst=abspath + f'/{new_product_name}.png')
+                    get_product.name = new_product_name
+                    db.session.commit()
+                    # Оновлення імені файлу зображення та назви продукту у базі даних
+    
+                elif 'price' == product_data[0]:
+                    # Зміна ціни продукту
+    
+                    new_product_price = flask.request.form['price']
+                    get_product.price = new_product_price
+                    get_product.final_price = round(int(new_product_price) - (int(new_product_price) * (int(get_product.discount) / 100)), 0)
+                    db.session.commit()
+                    # Оновлення ціни та кінцевої ціни продукту у базі даних
+    
+                elif 'discount' == product_data[0]:
+                    # Зміна знижки продукту
+    
+                    new_product_discount = flask.request.form['discount']
+                    get_product.discount = new_product_discount
+                    get_product.final_price = round(int(get_product.price) - (int(get_product.price) * (int(new_product_discount) / 100)), 0)
+                    db.session.commit()
+                    # Оновлення знижки та кінцевої ціни продукту у базі даних
+    
+        if current_user.is_authenticated:
+            # Перевірка, чи користувач автентифікований
+    
+            return flask.render_template(
+                template_name_or_list='admin.html',
+                products=Product.query.all(),
+                is_auth=current_user.is_authenticated,
+                name=current_user.name,
+                is_admin=current_user.is_admin
+            )
+            # Повернення шаблону admin.html з даними про всі продукти та даними про користувача для відображення на сторінці
+    
 
 ### Детальний опис кожного файлу models.py 
 #### Models.py сторінки shop_page
