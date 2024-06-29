@@ -136,7 +136,6 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
 ### Структура проекту 
 
 - `shop`: **головний додаток**, у якому зберігається база даних з інформацією користувача. У файл urls.py підключають усі частини проекту - Blueprint-и, проводять міграції. У папці templates є головний html-шаблон - base.html
- >  `shop`: **the main application**, which stores the database with user information. All parts of the project - Blueprints - are connected to the urls.py file and migrations are performed. The templates folder contains the main html template - base.html
 - `registration_page`: логіка сторінки реєстрації, папка містить модель **User**, що зберагіє дані зареєстрованих користувачів, взятих з форми реєстрації у папці template.
 - `authorization_page`: логіка сторінки авторизації, у папці template є шоблон з формою авторизації (логін та пароль).
 - `home_page`:  основна сторінка користувача, яка з'являється після реєстрації, містить посилання на усі інші сторінки веб-сайту.
@@ -144,13 +143,13 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
 - `cart`: сторінка корзини, у якій зберігаються усі бажані товари для оформлення замовлення. У файлі cart.html є форма для заповнення інформації про замовлення, дані зберігаються у моделі **Order**. Сторінка cart_2.html відображається лише після оформлення замовлення. Файл views.py відповідає за відправку листа на пошту, що оповіщає про оформлення нового замволення.
 - `admin_page`: сторінка, що доступна лише користувачам, які мають у таблиці User **is_admin = 1**. Файл admin.html містить 4 форми, за допомогою них, на сторінці можна змінювати опис товару (картинку, ціну, ім'я, знижку продукту), додавати новий асортимент товару та видаляти продукт з бази даних.
 - `contacts_page`: сторінка, що відповідає за контакти, де ви можете зв'язатись із розробником сайту.
->`registration_page`: the logic of the registration page, the folder contains the **User** model, which stores the data of registered users taken from the registration form in the template folder.
->`authorization_page`: logic of the authorization page, in the template folder there is a template with an authorization form (login and password).
->`home_page`: the main user page that appears after registration and contains links to all other pages of the website.
->`shop_page`: a page with a product assortment, there is a **Product** model that stores all products on the page. Product information is stored in the **excel file** Product.xlsx.
->`cart`: the cart page, which stores all the desired products for ordering. The cart.html file contains a form for filling in order information, the data is stored in the **Order** model. The cart_2.html page is displayed only after the order is placed. The views.py file is responsible for sending a letter to the email notifying you of a new order.
->`admin_page`: a page that is available only to users who have **is_admin = 1** in the User table. The admin.html file contains 4 forms, using them, on the page you can change the product description (picture, price, name, product discount), add a new product range and delete a product from the database.
->`contacts_page`: the page responsible for contacts, where you can contact the site developer.
+>-`registration_page`: the logic of the registration page, the folder contains the **User** model, which stores the data of registered users taken from the registration form in the template folder.
+>-`authorization_page`: logic of the authorization page, in the template folder there is a template with an authorization form (login and password).
+>-`home_page`: the main user page that appears after registration and contains links to all other pages of the website.
+>-`shop_page`: a page with a product assortment, there is a **Product** model that stores all products on the page. Product information is stored in the **excel file** Product.xlsx.
+>-`cart`: the cart page, which stores all the desired products for ordering. The cart.html file contains a form for filling in order information, the data is stored in the **Order** model. The cart_2.html page is displayed only after the order is placed. The views.py file is responsible for sending a letter to the email notifying you of a new order.
+>-`admin_page`: a page that is available only to users who have **is_admin = 1** in the User table. The admin.html file contains 4 forms, using them, on the page you can change the product description (picture, price, name, product discount), add a new product range and delete a product from the database.
+>-`contacts_page`: the page responsible for contacts, where you can contact the site developer.
 ### Створення головного додатку: Flask
 
 1. Створити змінну з назвою вашого головного додатку, що приймає у собі клас Flask з модуля flask  
