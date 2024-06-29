@@ -1201,9 +1201,129 @@ def reg_render():
                 is_admin=current_user.is_admin
             )
             # Повернення шаблону admin.html з даними про всі продукти та даними про користувача для відображення на сторінці
+### **cart_page**
+```python
+Функція cart_render обробляє відображення сторінки кошика покупок у веб-додатку на Flask, керуючи як відображенням продуктів, так і обробкою замовлень. Нижче наведено пояснення функції та її компонентів:
+
+1. Імпорт модулів:
+    - Необхідні модулі Flask (`flask`, `flask_mail`).
+    - current_user з flask_login для доступу до інформації про поточного користувача.
+    - Моделі Product та Order для взаємодії з базою даних.
+    - db для операцій з базою даних.
+    - mail для відправки електронної пошти.
+    - telegram_bot для відправки повідомлень через Telegram.
+
+2. Визначення функції: cart_render
+ is_admin = False - Якщо користувач не адміністратор
+    products_cookie = flask.request.cookies.get('products') - Перевірка наявності продуктів у куках:
+
+         if products_cookie:  - Отримує куки products.
+          products = products_cookie.split(' ') - Розділяє куки для отримання окремих ID продуктів.
+             list_products = []- Ініціалізує list_products для зберігання об'єктів продуктів.
+repeate_id = []-  для відстеження оброблених ID продуктів.
+
+    for id_product in products: - Підрахунок продуктів:
+     count_products = products.count(id_product) - Перебирає ID продуктів для підрахунку кількості.
+if id_product not in repeate_id:
+product = Product.query.get(id_product)  - Отримує деталі продуктів з бази даних.
+        if product: 
+product.count = count_products 
+list_products.append(product) repeate_id.append(id_product)- Додає об'єкти продуктів з їх кількістю до list_products.
+
+    - Обробка POST запитів:
+        if flask.request.method == 'POST': - Якщо метод запиту є POST.
+         if flask.request.form.get('send-order'):  - Якщо форма містить send-order, створює новий об'єкт Order з даними форми.
+ 
+order = Order(
+                name=flask.request.form['name'] - записуємо імʼя з форми яку користувач заповнює на сайті.
+                last_name=flask.request.form['last-name']  - записуємо призвіще з форми яку користувач заповнює на сайті.
+                    phone=flask.request.form['phone']  - записуємо телефон з форми яку користувач заповнює на сайті.
+                email=flask.request.form['email']  - записуємо електронну пошту з форми.
+                city=flask.request.form['city']  - записуємо місто з форми.
+               post_office=flask.request.form['post-office']  - записуємо значення з форми.
+            preferences=flask.request.form['preferences']  - записуємо значення з форми.
+            id_product=str(list_products) - в зміну записуємо всі продукти з списку list_products
+            )
+
+            db.session.add(order) - Додає замовлення до бази даних.
+db.session.commit() - Збереження змін у базі даних.     
+   
+message_text = f'Order № {order.id}: \n\n'  - в змінну message_text записуємо id ордеру. \n - переходить на наступний рядок.
+message_text += f'First name: {order.name}\n' - += до рядку вище додає нове значення, імʼя, із змінної order  в яку записане значення імʼя яке взяте із форми.
+message_text += f'Last name: {order.last_name}\n' - записуємо прізвище.
+message_text += f'Phone number: {order.phone}\n' - записує номер телефону.
+message_text += f'Email: {order.email}\n' записує електронну адресу.
+message_text += f'City: {order.city}\n' - записуж назву міста.
+message_text += f'Post office: {order.post_office}\n' - записує поштове відділення.
+message_text += f'Preferences: {order.preferences}\n' - записує додаткові побажання.
 
 
-    
+message = flask_mail.Message(
+subject=f'Order № {order.id}', 
+sender='vserhiienko212@gmail.com', 
+recipients=[f'{order.email}'], 
+body= message_text ) mail.send(message) - Створює повідомлення з підсумком замовлення.
+
+mail.send(message) - Відправляє електронного листа з підтвердженням замовлення користувачу.
+            
+@telegram_bot.callback_query_handler(func=lambda callback: True) 
+def answer(callback): 
+telegram_bot.send_message( 
+callback.message.chat.id, 
+text=f'Було зроблено нове замовлення №{order.id}', 
+message_thread_id= 2 ) - Відправляє сповіщення у Telegram чат.
+
+return flask.render_template( 
+template_name_or_list='cart_2.html', 
+is_admin=current_user.is_admin,
+name=current_user.name, 
+products=list_products,
+is_authenticated=current_user.is_authenticated
+)  - Відображає інший шаблон кошика (`cart_2.html`), що вказує на розміщення замовлення.
+        
+elif flask.request.form.get('cancel-order'):
+
+cancelled_message_text = f'Order was cancelled' 
+
+cancelled_message = flask_mail.Message(  -Скасування замовлення:
+subject=f'Order',
+sender='vserhiienko212@gmail.com', 
+recipients=[current_user.email], 
+body=cancelled_message_text
+ ) 
+
+mail.send(cancelled_message) 
+print('order was cancelled')  - Якщо форма містить cancel-order, відправляє електронного листа зі скасуванням замовлення користувачу.
+
+return flask.render_template(
+template_name_or_list='cart.html',
+ is_admin=current_user.is_admin,
+ name=current_user.name,
+ products=list_products,
+ is_authenticated=current_user.is_authenticated
+ ) 
+        - Відображає сторінку кошика знову (`cart.html`).
+
+ if current_user.is_authenticated:
+ return flask.render_template( 
+template_name_or_list = 'cart.html',
+products= list_products,
+is_authenticated = current_user.is_authenticated, 
+name = current_user.name, 
+is_admin = current_user.is_admin
+ )
+        - Якщо користувач аутентифікований, відображає шаблон кошика (`cart.html`) з деталями продуктів і інформацією про користувача.
+
+        - Якщо користувач не аутентифікований, відображає шаблон кошика без інформації про користувача.
+
+
+    return flask.render_template( 
+template_name_or_list = 'cart.html', 
+is_admin = current_user.is_admin
+ ) - Відображає відповідний шаблон на основі статусу аутентифікації користувача та дій форми.
+
+
+```  
 
 ### Детальний опис кожного файлу models.py 
 #### Models.py сторінки shop_page
@@ -1462,62 +1582,68 @@ for (let count = 0; count < listButtonsMinus.length; count++ ){
       }
     )
 }
+#### Файл Shop
+```python
+// Вибираємо всі елементи з класом 'button' і зберігаємо їх у listButtons
+const listButtons = document.querySelectorAll('.button');
 
-#### Файл PlusCookies(cart)
-let listButtonsMinus = document.querySelectorAll(".minus")
-// Отримуємо всі кнопки з класом "minus" і зберігаємо їх у змінній listButtonsMinus
+// Вибираємо елемент з класом 'basket-link'
+let basketLink = document.querySelector('.basket-link');
 
-for (let count = 0; count < listButtonsMinus.length; count++ ){
-    let button = listButtonsMinus[count]
-    // Проходимо по кожній кнопці у списку listButtonsMinus
+// Ініціалізуємо tickCount значенням 0 для відстеження кількості доданих товарів
+let tickCount = 0;
 
+// Створюємо новий елемент <p>
+let p = document.createElement('p');
+
+// Проходимо через кожну кнопку у listButtons
+for (let count = 0; count < listButtons.length; count++) {
+
+    // Отримуємо поточну кнопку в циклі
+    let button = listButtons[count];
+
+    // Додаємо обробник події натискання на поточну кнопку
     button.addEventListener(
-      type = "click",
-      listener = (event) =>{
-        // Додаємо обробник подій на клік для кожної кнопки
+        'click', // Вказуємо тип події як 'click' (натискання)
+        function (event) { // Визначаємо функцію-обробник події
+            console.log('додано'); // Виводимо 'додано' в консоль при натисканні на кнопку
 
-        let cookiesProducts = document.cookie.split('=')[1] 
-        // Отримуємо значення куків, розділяємо їх і зберігаємо у змінній cookiesProducts
+            // Створюємо новий елемент <img>
+            let img = document.createElement("img");
+            // Встановлюємо джерело зображення на 'img/cart-tick.png'
+            img.src = 'img/cart-tick.png';
+            // Додаємо клас 'cart-tick' до зображення
+            img.classList.add('cart-tick');
+            // Додаємо зображення до елемента basketLink
+            basketLink.appendChild(img);
 
-        let listIdProducts = cookiesProducts.split(" ")
-        // Розділяємо значення куків по пробілах, щоб отримати список ID продуктів
+            // Збільшуємо tickCount на 1
+            tickCount++;
+            // Встановлюємо текстовий вміст елемента <p> як поточне значення tickCount
+            p.textContent = tickCount;
+            // Додаємо клас 'cart-p' до елемента <p>
+            p.classList.add('cart-p');
+            // Додаємо елемент <p> до елемента basketLink
+            basketLink.appendChild(p);
 
-        for (let index = 0; index < listIdProducts.length; index++){
-          if (button.id == listIdProducts[index]){
-            listIdProducts.splice(index, 1)
-            // Знаходимо продукт з таким же ID як у кнопки, видаляємо його з списку
+            // Якщо кількість товарів більше 9, змінюємо стиль тексту
+            if (p.textContent > 9) {
+                p.style.fontSize = '10px'; // Змінюємо розмір шрифту
+                p.style.paddingTop = '12px'; // Змінюємо відступ зверху
+            }
 
-            button.nextElementSibling.textContent = Number(button.nextElementSibling.textContent) - 1
-            // Зменшуємо кількість продуктів, відображену поруч з кнопкою
+            // Якщо у файлах cookie порожньо, додаємо новий cookie з поточним товаром
+            if (document.cookie == '') {
+                document.cookie = products=${button.id}; path=/;
+            } else { // Інакше оновлюємо існуючий cookie
+                let product_id = document.cookie.split('=')[1];
+                document.cookie = products=${product_id} ${button.id}; path=/;
+            }
 
-            break
-          }
+            // console.log(button.id.length) // Коментар для виводу довжини id кнопки у консоль
         }
-        
-        if (button.nextElementSibling.textContent == 0){
-            document.querySelector(`#product-${button.id}`).remove()
-            // Якщо кількість продуктів стала нульовою, видаляємо продукт з DOM
-
-        }
-        
-        document.cookie = `products = ${listIdProducts.join(" ")}; path = /`
-        // Оновлюємо куки з новим списком продуктів
-
-        if (document.cookie.split('=')[1] == ''){
-            let h2 = document.createElement('h2')
-            h2.textContent = 'Корзина порожня'
-            // Якщо куки порожні, створюємо елемент <h2> з текстом "Корзина порожня"
-
-            document.body.append(h2)
-            // Додаємо новий елемент до тіла документа
-
-            document.querySelector('.processing-conteiner').remove()
-            // Видаляємо контейнер з обробкою замовлення
-        }
-      }
-    )
+    );
 }
-
 // Додатковий код для оновлення відображення корзини
 
 let cookies = document.cookie.split(' ')
@@ -1553,6 +1679,179 @@ document.querySelector('.processing').addEventListener(
         // Додаємо обробник подій на клік для елемента з класом "processing", який показує спливаюче вікно
     }
 )
+```
+#### Файл Processing
+```javaScript
+// Розділяємо куки (cookies) на окремі елементи за пробілом
+let cookies = document.cookie.split(' ');
+console.log(cookies.length); // Виводимо кількість елементів у консоль
+
+// Встановлюємо текстовий вміст елемента з класом 'final-count-num' як кількість куків
+document.querySelector('.final-count-num').textContent = cookies.length;
+
+// Знаходимо елемент з класом 'count'
+let count = document.querySelector('.count');
+// Знаходимо всі елементи з класом 'price'
+let price = document.querySelectorAll('.price');
+
+// Якщо кількість куків більша за 1 і менша за 5
+if (cookies.length > 1 && cookies.length < 5) {
+    document.querySelector('.total-count').textContent = '-товари на суму';
+}
+
+// Якщо кількість куків дорівнює 1
+if (cookies.length == 1) {
+    document.querySelector('.total-count').textContent = '-товар на суму';
+}
+
+// Знаходимо елемент з класом 'final-count'
+let finalCount = document.querySelector(".final-count");
+// Встановлюємо текстовий вміст елемента 'final-count' як добуток кількості куків на ціну
+finalCount.textContent = cookies.length * Number(price);
+
+// Додаємо обробник події 'click' на елемент з класом 'processing'
+document.querySelector('.processing').addEventListener(
+    'click', (event) => {
+        // Змінюємо стиль відображення елемента з класом 'popup-processing' на "flex"
+        document.querySelector('.popup-processing').style.display = "flex";
+    }
+);
+Пояснення:
+
+Розділяємо рядок куків на окремі елементи за пробілом та виводимо кількість елементів у консоль.
+Встановлюємо кількість елементів у куках як текстовий вміст елемента з класом 'final-count-num'.
+Знаходимо елементи з класами 'count' та 'price'.
+Перевіряємо кількість елементів у куках і відповідно змінюємо текстовий вміст елемента з класом 'total-count'.
+Встановлюємо текстовий вміст елемента 'final-count' як добуток кількості куків на ціну.
+Додаємо обробник події 'click' на елемент з класом 'processing', який змінює стиль відображення елемента з класом 'popup-processing' на "flex".
+
+```
+####Файл Edit.js
+
+```javascript
+// Вибираємо всі елементи з класом 'edit-img-btn' і зберігаємо їх у listButtonImage
+let listButtonImage = document.querySelectorAll(".edit-img-btn");
+
+// Проходимо через кожну кнопку у listButtonImage
+for (let count = 0; count < listButtonImage.length; count++) {
+    let button = listButtonImage[count];
+    
+    // Додаємо обробник події натискання на поточну кнопку
+    button.addEventListener(
+        "click", // Вказуємо тип події як 'click'
+        (event) => { // Визначаємо функцію-обробник події
+            // Відображаємо модальне вікно
+            document.querySelector(".modal-window").style.display = "flex";
+
+            // Налаштовуємо властивості інпуту для завантаження зображення
+            let inputData = document.querySelector(".input-data");
+            inputData.type = "file";
+            inputData.accept = "image/*";
+            inputData.name = "image";
+            // Змінюємо текст мітки в модальному вікні
+            document.querySelector(".modal-label").textContent = "CHANGE IMAGE:";
+            // Встановлюємо значення кнопки зміни
+            document.querySelector('.change-btn').value = image-${button.id};
+        }
+    );
+}
+
+// Вибираємо всі елементи з класом 'edit-name' і зберігаємо їх у listButtonName
+let listButtonName = document.querySelectorAll(".edit-name");
+
+// Проходимо через кожну кнопку у listButtonName
+for (let count = 0; count < listButtonName.length; count++) {
+    let button = listButtonName[count];
+
+    // Додаємо обробник події натискання на поточну кнопку
+    button.addEventListener(
+        "click", // Вказуємо тип події як 'click'
+        (event) => { // Визначаємо функцію-обробник події
+            // Відображаємо модальне вікно
+            document.querySelector(".modal-window").style.display = "flex";
+            
+            // Налаштовуємо властивості інпуту для введення тексту
+            let inputData = document.querySelector(".input-data");
+            inputData.type = "text";
+            inputData.name = "name";
+            // Змінюємо текст мітки в модальному вікні
+            document.querySelector(".modal-label").textContent = "CHANGE TEXT:";
+            // Встановлюємо значення кнопки зміни
+            document.querySelector('.change-btn').value = name-${button.id};
+        }
+    );
+}
+
+// Вибираємо всі елементи з класом 'edit-price' і зберігаємо їх у listButtonPrice
+let listButtonPrice = document.querySelectorAll(".edit-price");
+
+// Проходимо через кожну кнопку у listButtonPrice
+for (let count = 0; count < listButtonPrice.length; count++) {
+    let button = listButtonPrice[count];
+
+    // Додаємо обробник події натискання на поточну кнопку
+    button.addEventListener(
+        "click", // Вказуємо тип події як 'click'
+        (event) => { // Визначаємо функцію-обробник події
+            // Відображаємо модальне вікно
+            document.querySelector(".modal-window").style.display = "flex";
+
+            // Налаштовуємо властивості інпуту для введення числа
+            let inputData = document.querySelector(".input-data");
+            inputData.type = "number";
+            inputData.name = "price";
+            // Змінюємо текст мітки в модальному вікні
+            document.querySelector(".modal-label").textContent = "CHANGE PRICE:";
+            // Встановлюємо значення кнопки зміни
+            document.querySelector('.change-btn').value = price-${button.id};
+        }
+    );
+}
+
+// Вибираємо всі елементи з класом 'edit-discount' і зберігаємо їх у listButtonDiscount
+let listButtonDiscount = document.querySelectorAll(".edit-discount");
+
+// Проходимо через кожну кнопку у listButtonDiscount
+for (let count = 0; count < listButtonDiscount.length; count++) {
+    let button = listButtonDiscount[count];
+
+Кристина, [2024-06-29 7:25 PM]
+// Додаємо обробник події натискання на поточну кнопку
+    button.addEventListener(
+        "click", // Вказуємо тип події як 'click'
+        (event) => { // Визначаємо функцію-обробник події
+            // Відображаємо модальне вікно
+            document.querySelector(".modal-window").style.display = "flex";
+
+            // Налаштовуємо властивості інпуту для введення числа (знижки)
+            let inputData = document.querySelector(".input-data");
+            inputData.type = "number";
+            inputData.name = "discount";
+            // Змінюємо текст мітки в модальному вікні
+            document.querySelector(".modal-label").textContent = "CHANGE DISCOUNT:";
+            // Встановлюємо значення кнопки зміни
+            document.querySelector('.change-btn').value = discount-${button.id};
+        }
+    );
+}
+
+// Додаємо обробник події натискання на елемент з класом 'new-product'
+document.querySelector('.new-product').addEventListener(
+    'click', (event) => {
+        event.preventDefault(); // Відміняємо стандартну поведінку події
+        // Відображаємо блок з класом 'new-product-div'
+        document.querySelector('.new-product-div').style.display = 'flex';
+    }
+);
+`
+
+Пояснення:
+1. Для кожного елементу з класом 'edit-img-btn', 'edit-name', 'edit-price', і 'edit-discount' додається обробник події натискання.
+2. При натисканні на будь-яку кнопку, відповідно налаштовуються властивості інпуту (тип, прийнятні файли, ім'я).
+3. Текст мітки в модальному вікні змінюється відповідно до типу зміни (зображення, текст, ціна, знижка).
+4. Для кнопки 'new-product' додається обробник події натискання, який відображає блок для додавання нового продукту.
 
 # Висновки 
-- За цей час розробки проекту усі учасники команди навчились головному, як створювати повноцінний веб-додаток. Ми дізнались дуже багато чого нового, наприклад як працювати моделями, що таке Jinja-шаблонізатор, як деплоїти проект на pythonanewhere, як працювати з базою даних через модуль flask_sqlalchemy, що таке міграції та навіщо вони. Навчились автоматично надсилати ел. листи на пошту. Поглибили свої знання у вивченні мови програмування JavaScript. Отже, цей проект дав нам величезні знання, також це чудова нагода попрактикуватись у створення веб-додатків. В майбутньому цей веб-додаток точно дасть початок наступним. 
+- За цей час розробки проекту усі учасники команди навчились головному, як створювати повноцінний веб-додаток. Ми дізнались дуже багато чого нового, наприклад як працювати моделями, що таке Jinja-шаблонізатор, як деплоїти проект на pythonanewhere, як працювати з базою даних через модуль flask_sqlalchemy, що таке міграції та навіщо вони. Навчились автоматично надсилати ел. листи на пошту. Поглибили свої знання у вивченні мови програмування JavaScript. Отже, цей проект дав нам величезні знання, також це чудова нагода попрактикуватись у створення веб-додатків. В майбутньому цей веб-додаток точно дасть початок наступним.
+
+```
