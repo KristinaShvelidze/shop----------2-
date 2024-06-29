@@ -143,6 +143,7 @@ Telegram bot, which can only be accessed by the owner of the web store. The bot 
 - `cart`: сторінка корзини, у якій зберігаються усі бажані товари для оформлення замовлення. У файлі cart.html є форма для заповнення інформації про замовлення, дані зберігаються у моделі **Order**. Сторінка cart_2.html відображається лише після оформлення замовлення. Файл views.py відповідає за відправку листа на пошту, що оповіщає про оформлення нового замволення.
 - `admin_page`: сторінка, що доступна лише користувачам, які мають у таблиці User **is_admin = 1**. Файл admin.html містить 4 форми, за допомогою них, на сторінці можна змінювати опис товару (картинку, ціну, ім'я, знижку продукту), додавати новий асортимент товару та видаляти продукт з бази даних.
 - `contacts_page`: сторінка, що відповідає за контакти, де ви можете зв'язатись із розробником сайту.
+  
 >-`registration_page`: the logic of the registration page, the folder contains the **User** model, which stores the data of registered users taken from the registration form in the template folder.
 >-`authorization_page`: logic of the authorization page, in the template folder there is a template with an authorization form (login and password).
 >-`home_page`: the main user page that appears after registration and contains links to all other pages of the website.
@@ -178,6 +179,20 @@ shop = flask.Flask(
     static_url_path= '/shop/' # назва, за якою можна знайти сторінку на веб-сайті
 )
 ```
+>Code example:
+```python
+# Import the necessary modules to create the database and migrations, the main application
+import flask, flask_sqlalchemy, flask_migrate, os
+
+shop = flask.Flask(
+    import_name= "settings", # name of the file where the variable is located 
+    template_folder= "shop/templates", # path to the templates folder
+    instance_path= os.path.abspath(__file__ + "/..."), # path where the database will be stored
+    static_url_path= '/shop/' # the name by which you can find the page on the website
+)
+```
+
+
 
  ### Створення додатку сторінки: Blueprint
 
